@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Bliss Autos</title>
+    <link rel="Bliss autos" href="Blisss autos.css">
+</head>
+<body>
+    <header>
+        <h1>Bliss Autos - Login</h1>
+    </header>
+    <style>
+        body {
+            background-image: url('carB.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            color: #000;            
+        }
+       
+        h1 {
+            color: #000;
+            text-align: center;
+        }
+        section {
+                padding: 2em;
+                text-align: center;
+                font-size: larger;
+                font-weight:bolder;
+        }
+        p {
+            font-size: larger;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+        }
+    </style>
+    <section id="login">
+        <h2>Login</h2>
+        <form id="login-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+    </section>
+
+    <script src="login.js"></script>
+</body>
+</html>

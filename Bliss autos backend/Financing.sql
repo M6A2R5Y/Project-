@@ -1,0 +1,1 @@
+SELECT * FROM bliss_autos.financing;
