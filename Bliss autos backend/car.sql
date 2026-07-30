@@ -1,1 +1,20 @@
 SELECT * FROM bliss_autos.car;
+INSERT INTO car (make, model, year, price, image) VALUES
+('Honda', 'Civic', 2019, 'Ksh 2,340,000', 'Honda Civic.jpg'),
+('Chevrolet', 'Camaro', 2020, 'Ksh 3,640,000', 'Chevrolet Camaro.jpg'),
+('BMW', '3 Series', 2018, 'Ksh 3,250,000', 'BMW 3 Series.jpg'),
+('Toyota', 'Corolla', 2020, 'Ksh 2,600,000', 'Toyota Corolla.jpg'),
+('Audi', 'A4', 2019, 'Ksh 3,510,000', 'Audi A4.jpg'),
+('Mercedes-Benz', 'C-Class', 2020, 'Ksh 4,550,000', 'Mercedes-Benz C-Class.jpg'),
+('Hyundai', 'Elantra', 2021, 'Ksh 2,470,000', 'Hyundai Elantra.jpg'),
+('Nissan', 'Altima', 2020, 'Ksh 2,860,000', 'Nissan Altima.jpg'),
+('Subaru', 'Outback', 2019, 'Ksh 3,120,000', 'Subaru Outback.jpg'),
+('Volkswagen', 'Passat', 2020, 'Ksh 3,380,000', 'Volkswagen Passat.jpg'),
+('Ford', 'Mustang', 2021, 'Ksh 3,900,000', 'Ford Mustang.jpg'),
+('Kia', 'Optima', 2021, 'Ksh 2,730,000', 'Kia Optima.jpg'),
+('Honda', 'Accord', 2018, 'Ksh 2,665,000', 'Honda Accord.jpg'),
+('Ford', 'Fusion', 2019, 'Ksh 2,990,000', 'Ford Fusion.jpg'),
+('Chevrolet', 'Malibu', 2020, 'Ksh 2,925,000', 'Chevrolet Malibu.jpg'),
+('Toyota', 'Camry', 2021, 'Ksh 3,185,000', 'Toyota Camry.jpg'),
+('Hyundai', 'Sonata', 2020, 'Ksh 3,055,000', 'Hyundai Sonata.jpg'),
+('Nissan', 'Maxima', 2019, 'Ksh 3,705,000', 'Nissan Maxima.jpg');

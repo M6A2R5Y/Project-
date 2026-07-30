@@ -13,9 +13,10 @@
         <header>
             <nav>
                 <ul>
+                    <li><a href="Dashboard.html">Dashboard</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="contact.html">Contact</a></li>
-                    <li><a href="register.html">Register</a></li>
+                    <li><a href="Register.html">Register</a></li>
                     <li><a href="login.html">Login</a></li>
                 </ul>
             </nav>
@@ -23,7 +24,7 @@
         <section id="home">
                 <h2>Welcome to Bliss Autos</h2>
                 <h3>Quality is Credited</h3>
-                <button onclick="window.location.href='inventory.html'">Browse Inventory</button>
+                <button onclick="window.location.href='Inventory.html'">Browse Inventory</button>
         </section>
         <section id="contact">
             <h2>Contact Us</h2>
@@ -43,6 +44,30 @@
             <a href="https://ee.kobotoolbox.org/x/wUv9T2rv" target="_blank">Click here to take the survey</a>
         </section>
 
+        <!-- Premium Chatbot Floating Widget -->
+        <div id="chatbot-widget">
+            <button id="chatbot-button" title="Chat with AI Assistant">💬</button>
+            <div id="chatbot-window">
+                <div class="chatbot-header">
+                    <h3>Bliss Autos Assistant</h3>
+                    <button id="chatbot-close" class="chatbot-close">&times;</button>
+                </div>
+                <div class="chatbot-body" id="chat-messages">
+                    <!-- Chat messages will appear here -->
+                </div>
+                <!-- Leads intake form for new customers -->
+                <div id="chat-leads-form">
+                    <h4>Introduce Yourself</h4>
+                    <input type="text" id="lead-name" placeholder="Your Name" required>
+                    <input type="email" id="lead-email" placeholder="Your Email" required>
+                    <button id="submit-lead">Start Chat</button>
+                </div>
+                <div class="chatbot-footer">
+                    <input type="text" id="chat-input" placeholder="Type a message..." disabled>
+                    <button id="send-chat" disabled>➔</button>
+                </div>
+            </div>
+        </div>
 
         <footer>
             <p>&copy; 2024 Bliss Autos. All rights reserved.</p>

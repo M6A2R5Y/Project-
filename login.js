@@ -4,21 +4,30 @@ document.getElementById('login-form').addEventListener('submit', function (event
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    fetch('/api/login', {
+    fetch('http://localhost:3000/api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ email, password })
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.token) {
-            localStorage.setItem('authToken', data.token);
-            alert('Login successful!');
-            window.location.href = 'index.html';
+    .then(async response => {
+        if (response.ok) {
+            const data = await response.json();
+            if (data.token) {
+                localStorage.setItem('authToken', data.token);
+                alert('Login successful!');
+                window.location.href = 'Bliss autos.html';
+            } else {
+                alert('Login failed: Token not received.');
+            }
         } else {
-            alert('Login failed.');
+            const errorText = await response.text();
+            alert('Login failed: ' + errorText);
         }
+    })
+    .catch(err => {
+        console.error('Connection error:', err);
+        alert('Could not connect to the server. Please ensure the backend is running.');
     });
 });
