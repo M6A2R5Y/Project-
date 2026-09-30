@@ -3,9 +3,9 @@ const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
-const port = 3000;
 
 app.use(bodyParser.json());
 
@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '@Kinyanjui9630',
+    password: '',
     database: 'bliss_autos'
 });
 
@@ -63,8 +63,8 @@ db.connect(err => {
     });
 });
 
-//Serve static files from the public
-app.use(express.static('public'));
+//Serve static files from the project root (parent directory)
+app.use(express.static(path.join(__dirname, '..')));
 // Parse JSON bodies
 app.use(express.json());
 
@@ -211,6 +211,11 @@ AI:`;
     });
 
     res.json({ response: responseText });
+});
+
+// Serve homepage for root URL
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'Bliss autos.html'));
 });
 
 //start the server
