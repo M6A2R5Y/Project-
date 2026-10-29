@@ -4,15 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certified Vehicle Inventory - Bliss Autos</title>
-    <meta name="description" content="Browse verified pre-owned and new vehicles in Nairobi, Kenya. Inspected inventory, transparent vehicle history reports, and dealer financing available.">
+    <meta name="description" content="Browse verified pre-owned and new vehicles in Nairobi, Kenya. Inspected inventory, all-inclusive pricing with zero hidden fees, and dealer financing.">
     <link rel="canonical" href="https://www.blissautos.co.ke/Inventory.html">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="Blisss autos.css">
 </head>
 <body>
-    <header class="site-header">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" role="banner">
         <div class="top-bar">
-            <span>Showroom: Mombasa Road, Nairobi, Kenya | Hours: Mon - Sat 8:00 AM - 6:00 PM</span>
+            <span>Showroom: Mombasa Road, Plot LR No. 209/11452, Nairobi | Hours: Mon - Sat 8:00 AM - 6:00 PM</span>
             <div>
                 <a href="tel:+254700000000">+254 700 000 000</a>
                 <a href="mailto:sales@blissautos.co.ke">sales@blissautos.co.ke</a>
@@ -20,16 +22,16 @@
         </div>
         <div class="header-container">
             <a href="index.html" class="brand-wrapper">
-                <img src="favicon.svg" alt="Bliss Autos Logo" class="brand-logo-img">
+                <img src="favicon.svg" alt="Bliss Autos Dealership Emblem" class="brand-logo-img">
                 <div>
                     <div class="brand-title">Bliss Autos</div>
                     <div class="brand-subtitle">Motor Dealership</div>
                 </div>
             </a>
-            <nav class="main-nav">
+            <nav class="main-nav" aria-label="Main Navigation">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="Inventory.html" class="active">Inventory</a></li>
+                    <li><a href="Inventory.html" class="active" aria-current="page">Inventory</a></li>
                     <li><a href="Dashboard.html">Dashboard</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="contact.html">Contact</a></li>
@@ -42,19 +44,26 @@
     <div class="page-header">
         <div class="page-header-container">
             <h1>Showroom Vehicle Inventory</h1>
-            <p>Certified 150-point technical inspection, verified mileage logs, and transparent pricing in Kenya Shillings.</p>
+            <p>Certified 150-point technical inspection, verified mileage logs, and all-inclusive pricing in Kenya Shillings.</p>
         </div>
     </div>
 
-    <main class="container">
+    <main id="main-content" class="container">
+        <!-- Transparent Pricing Notice (Remove Hidden Fees) -->
+        <div class="fee-breakdown-banner">
+            <strong>All-Inclusive Price Guarantee (Zero Hidden Fees):</strong> Every vehicle price displayed below includes KRA Import Duty, Excise Tax, 16% VAT, and our 150-Point Mechanical Inspection Certificate. The only statutory pass-through fee is the official NTSA TIMS Logbook Transfer fee of <strong>Ksh 3,500</strong>. All holding deposits are 100% refundable under our <a href="refund.html" style="color: var(--color-accent); font-weight: 600;">Refund Policy</a>.
+        </div>
+
         <!-- Search and Multi-Attribute Filter Controls -->
-        <div class="inventory-controls">
+        <div class="inventory-controls" role="search" aria-label="Filter Vehicle Inventory">
             <div class="search-filter-row">
                 <div>
-                    <input type="text" id="search" class="filter-input" placeholder="Search by make, model, or year..." oninput="filterCars()">
+                    <label for="search" class="skip-link">Search by make, model, or year</label>
+                    <input type="text" id="search" class="filter-input" aria-label="Search by make, model, or year" placeholder="Search by make, model, or year..." oninput="filterCars()">
                 </div>
                 <div>
-                    <select id="filter-make" class="filter-select" onchange="filterCars()">
+                    <label for="filter-make" class="skip-link">Filter by Vehicle Make</label>
+                    <select id="filter-make" class="filter-select" aria-label="Filter by Vehicle Make" onchange="filterCars()">
                         <option value="">All Vehicle Makes</option>
                         <option value="Audi">Audi</option>
                         <option value="BMW">BMW</option>
@@ -71,7 +80,8 @@
                     </select>
                 </div>
                 <div>
-                    <select id="filter-price" class="filter-select" onchange="filterCars()">
+                    <label for="filter-price" class="skip-link">Filter by Price Range</label>
+                    <select id="filter-price" class="filter-select" aria-label="Filter by Price Range" onchange="filterCars()">
                         <option value="">All Price Ranges</option>
                         <option value="under3m">Under Ksh 3,000,000</option>
                         <option value="3m-3.5m">Ksh 3.0M - Ksh 3.5M</option>
@@ -79,18 +89,19 @@
                     </select>
                 </div>
                 <div>
-                    <select id="filter-sort" class="filter-select" onchange="filterCars()">
-                        <option value="default">Sort: Recommended</option>
+                    <label for="filter-sort" class="skip-link">Sort Vehicles</label>
+                    <select id="filter-sort" class="filter-select" aria-label="Sort Vehicles" onchange="filterCars()">
+                        <option value="default">Sort: Default Order</option>
                         <option value="price-asc">Price: Low to High</option>
                         <option value="price-desc">Price: High to Low</option>
                         <option value="year-desc">Year: Newest First</option>
                     </select>
                 </div>
                 <div>
-                    <button class="btn btn-primary" onclick="resetFilters()">Reset</button>
+                    <button type="button" class="btn btn-primary" onclick="resetFilters()">Reset Filters</button>
                 </div>
             </div>
-            <div style="font-size: 13px; color: var(--color-text-muted); margin-top: 12px;">
+            <div role="status" aria-live="polite" style="font-size: 13px; color: var(--color-text-muted); margin-top: 12px;">
                 Displaying <span id="inventory-count" style="font-weight: 700; color: var(--color-primary);">18</span> verified vehicles available in our Nairobi showroom.
             </div>
         </div>
@@ -100,14 +111,14 @@
             <!-- 1. Honda Civic -->
             <div class="car-item" data-make="Honda" data-model="Civic" data-year="2019" data-price="2340000">
                 <div class="car-image-wrapper">
-                    <img src="images/Honda Civic.jpg" alt="2019 Honda Civic" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Honda Civic.jpg" alt="Front three-quarter view of 2019 Honda Civic sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Honda Civic</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 2,340,000</span>
-                        <span class="car-year">2019 Model</span>
+                        <span class="car-year">2019 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">1.5L Turbo (174 HP)</span></div>
@@ -125,14 +136,14 @@
             <!-- 2. Chevrolet Camaro -->
             <div class="car-item" data-make="Chevrolet" data-model="Camaro" data-year="2020" data-price="3640000">
                 <div class="car-image-wrapper">
-                    <img src="images/Chevrolet Camaro.jpg" alt="2020 Chevrolet Camaro" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Chevrolet Camaro.jpg" alt="Front three-quarter view of 2020 Chevrolet Camaro coupe at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Chevrolet Camaro</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 3,640,000</span>
-                        <span class="car-year">2020 Model</span>
+                        <span class="car-year">2020 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.0L Turbo (275 HP)</span></div>
@@ -150,14 +161,14 @@
             <!-- 3. BMW 3 Series -->
             <div class="car-item" data-make="BMW" data-model="3 Series" data-year="2018" data-price="3250000">
                 <div class="car-image-wrapper">
-                    <img src="images/BMW 3 series.jpg" alt="2018 BMW 3 Series" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/BMW 3 series.jpg" alt="Exterior profile of 2018 BMW 3 Series executive sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>BMW 3 Series</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 3,250,000</span>
-                        <span class="car-year">2018 Model</span>
+                        <span class="car-year">2018 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.0L TwinPower (248 HP)</span></div>
@@ -175,14 +186,14 @@
             <!-- 4. Toyota Corolla -->
             <div class="car-item" data-make="Toyota" data-model="Corolla" data-year="2020" data-price="2600000">
                 <div class="car-image-wrapper">
-                    <img src="images/Toyota corolla.jpg" alt="2020 Toyota Corolla" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Toyota corolla.jpg" alt="Front three-quarter view of 2020 Toyota Corolla sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Toyota Corolla</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 2,600,000</span>
-                        <span class="car-year">2020 Model</span>
+                        <span class="car-year">2020 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">1.8L 4-Cylinder DOHC</span></div>
@@ -200,14 +211,14 @@
             <!-- 5. Audi A4 -->
             <div class="car-item" data-make="Audi" data-model="A4" data-year="2019" data-price="3510000">
                 <div class="car-image-wrapper">
-                    <img src="images/Audi A4.jpg" alt="2019 Audi A4" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Audi A4.jpg" alt="Front three-quarter view of 2019 Audi A4 Quattro sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Audi A4</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 3,510,000</span>
-                        <span class="car-year">2019 Model</span>
+                        <span class="car-year">2019 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.0L TFSI Turbo (248 HP)</span></div>
@@ -225,14 +236,14 @@
             <!-- 6. Mercedes-Benz C-Class -->
             <div class="car-item" data-make="Mercedes-Benz" data-model="C-Class" data-year="2020" data-price="4550000">
                 <div class="car-image-wrapper">
-                    <img src="images/Mercedes-Benz C-Class.jpg" alt="2020 Mercedes-Benz C-Class" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Mercedes-Benz C-Class.jpg" alt="Front three-quarter view of 2020 Mercedes-Benz C-Class saloon at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Mercedes-Benz C-Class</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 4,550,000</span>
-                        <span class="car-year">2020 Model</span>
+                        <span class="car-year">2020 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.0L Inline-4 Turbo (255 HP)</span></div>
@@ -240,7 +251,7 @@
                         <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Rear-Wheel Drive</span></div>
                         <div class="spec-item"><span class="spec-label">Safety</span><span class="spec-val">Active Brake Assist</span></div>
                     </div>
-                    <p class="car-features-desc">High-specification luxury saloon with KEYLESS-GO, 10.25-inch high-resolution display, blind spot monitoring, and ambient lighting package.</p>
+                    <p class="car-features-desc">High-specification executive saloon with KEYLESS-GO, 10.25-inch high-resolution display, blind spot monitoring, and ambient lighting package.</p>
                     <div class="car-item-actions">
                         <a href="contact.html?vehicle=Mercedes-Benz+C-Class" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
                     </div>
@@ -250,14 +261,14 @@
             <!-- 7. Ford Mustang -->
             <div class="car-item" data-make="Ford" data-model="Mustang" data-year="2021" data-price="3900000">
                 <div class="car-image-wrapper">
-                    <img src="images/Ford Mustang.jpg" alt="2021 Ford Mustang" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Ford Mustang.jpg" alt="Front three-quarter view of 2021 Ford Mustang EcoBoost coupe at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Ford Mustang</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 3,900,000</span>
-                        <span class="car-year">2021 Model</span>
+                        <span class="car-year">2021 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.3L EcoBoost (310 HP)</span></div>
@@ -275,14 +286,14 @@
             <!-- 8. Hyundai Elantra -->
             <div class="car-item" data-make="Hyundai" data-model="Elantra" data-year="2021" data-price="2470000">
                 <div class="car-image-wrapper">
-                    <img src="images/Hyundai Elantra.jpg" alt="2021 Hyundai Elantra" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Hyundai Elantra.jpg" alt="Front three-quarter view of 2021 Hyundai Elantra sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Hyundai Elantra</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 2,470,000</span>
-                        <span class="car-year">2021 Model</span>
+                        <span class="car-year">2021 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.0L 4-Cylinder (147 HP)</span></div>
@@ -300,14 +311,14 @@
             <!-- 9. Nissan Altima -->
             <div class="car-item" data-make="Nissan" data-model="Altima" data-year="2020" data-price="2860000">
                 <div class="car-image-wrapper">
-                    <img src="images/Nissan Altima.jpg" alt="2020 Nissan Altima" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Nissan Altima.jpg" alt="Front three-quarter view of 2020 Nissan Altima sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Nissan Altima</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 2,860,000</span>
-                        <span class="car-year">2020 Model</span>
+                        <span class="car-year">2020 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.5L Direct Injection (188 HP)</span></div>
@@ -325,14 +336,14 @@
             <!-- 10. Subaru Outback -->
             <div class="car-item" data-make="Subaru" data-model="Outback" data-year="2019" data-price="3120000">
                 <div class="car-image-wrapper">
-                    <img src="images/Subaru Outback.jpg" alt="2019 Subaru Outback" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Subaru Outback.jpg" alt="Front three-quarter view of 2019 Subaru Outback AWD wagon at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Subaru Outback</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 3,120,000</span>
-                        <span class="car-year">2019 Model</span>
+                        <span class="car-year">2019 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.5L Boxer (175 HP)</span></div>
@@ -350,14 +361,14 @@
             <!-- 11. Volkswagen Passat -->
             <div class="car-item" data-make="Volkswagen" data-model="Passat" data-year="2020" data-price="3380000">
                 <div class="car-image-wrapper">
-                    <img src="images/Volkswagen Passat.jpg" alt="2020 Volkswagen Passat" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Volkswagen Passat.jpg" alt="Front three-quarter view of 2020 Volkswagen Passat sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Volkswagen Passat</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 3,380,000</span>
-                        <span class="car-year">2020 Model</span>
+                        <span class="car-year">2020 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.0L TSI Turbo (174 HP)</span></div>
@@ -375,14 +386,14 @@
             <!-- 12. Kia Optima -->
             <div class="car-item" data-make="Kia" data-model="Optima" data-year="2021" data-price="2730000">
                 <div class="car-image-wrapper">
-                    <img src="images/Kia Optima.jpg" alt="2021 Kia Optima" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Kia Optima.jpg" alt="Front three-quarter view of 2021 Kia Optima midsize sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Kia Optima</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 2,730,000</span>
-                        <span class="car-year">2021 Model</span>
+                        <span class="car-year">2021 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.4L DOHC 4-Cylinder</span></div>
@@ -400,14 +411,14 @@
             <!-- 13. Honda Accord -->
             <div class="car-item" data-make="Honda" data-model="Accord" data-year="2018" data-price="2665000">
                 <div class="car-image-wrapper">
-                    <img src="images/Honda Accord.jpg" alt="2018 Honda Accord" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Honda Accord.jpg" alt="Front three-quarter view of 2018 Honda Accord executive sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Honda Accord</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 2,665,000</span>
-                        <span class="car-year">2018 Model</span>
+                        <span class="car-year">2018 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">1.5L Turbo (192 HP)</span></div>
@@ -425,14 +436,14 @@
             <!-- 14. Ford Fusion -->
             <div class="car-item" data-make="Ford" data-model="Fusion" data-year="2019" data-price="2990000">
                 <div class="car-image-wrapper">
-                    <img src="images/Ford Fusion.jpg" alt="2019 Ford Fusion" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Ford Fusion.jpg" alt="Front three-quarter view of 2019 Ford Fusion sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Ford Fusion</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 2,990,000</span>
-                        <span class="car-year">2019 Model</span>
+                        <span class="car-year">2019 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">1.5L EcoBoost Turbo</span></div>
@@ -450,14 +461,14 @@
             <!-- 15. Chevrolet Malibu -->
             <div class="car-item" data-make="Chevrolet" data-model="Malibu" data-year="2020" data-price="2925000">
                 <div class="car-image-wrapper">
-                    <img src="images/Chevrolet Malibu.jpg" alt="2020 Chevrolet Malibu" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Chevrolet Malibu.jpg" alt="Front three-quarter view of 2020 Chevrolet Malibu sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Chevrolet Malibu</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 2,925,000</span>
-                        <span class="car-year">2020 Model</span>
+                        <span class="car-year">2020 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">1.5L Turbo DOHC</span></div>
@@ -475,14 +486,14 @@
             <!-- 16. Toyota Camry -->
             <div class="car-item" data-make="Toyota" data-model="Camry" data-year="2021" data-price="3185000">
                 <div class="car-image-wrapper">
-                    <img src="images/Toyota Camry.jpg" alt="2021 Toyota Camry" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Toyota Camry.jpg" alt="Front three-quarter view of 2021 Toyota Camry executive sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Toyota Camry</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 3,185,000</span>
-                        <span class="car-year">2021 Model</span>
+                        <span class="car-year">2021 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.5L Dynamic Force 4-Cyl</span></div>
@@ -490,7 +501,7 @@
                         <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Front-Wheel Drive</span></div>
                         <div class="spec-item"><span class="spec-label">Safety</span><span class="spec-val">Toyota Safety Sense 2.5+</span></div>
                     </div>
-                    <p class="car-features-desc">Benchmark reliability with TSS 2.5+, full-speed range dynamic radar cruise control, lane tracing assist, and integrated backup camera.</p>
+                    <p class="car-features-desc">Equipped with TSS 2.5+, full-speed range dynamic radar cruise control, lane tracing assist, and integrated backup camera.</p>
                     <div class="car-item-actions">
                         <a href="contact.html?vehicle=Toyota+Camry" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
                     </div>
@@ -500,14 +511,14 @@
             <!-- 17. Hyundai Sonata -->
             <div class="car-item" data-make="Hyundai" data-model="Sonata" data-year="2020" data-price="3055000">
                 <div class="car-image-wrapper">
-                    <img src="images/Hyundai Sonata.jpg" alt="2020 Hyundai Sonata" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Hyundai Sonata.jpg" alt="Front three-quarter view of 2020 Hyundai Sonata sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Hyundai Sonata</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 3,055,000</span>
-                        <span class="car-year">2020 Model</span>
+                        <span class="car-year">2020 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.5L GDI 4-Cylinder</span></div>
@@ -525,14 +536,14 @@
             <!-- 18. Nissan Maxima -->
             <div class="car-item" data-make="Nissan" data-model="Maxima" data-year="2019" data-price="3705000">
                 <div class="car-image-wrapper">
-                    <img src="images/Nissan Maxima.jpg" alt="2019 Nissan Maxima" loading="lazy">
-                    <span class="car-status-tag">Certified</span>
+                    <img src="images/Nissan Maxima.jpg" alt="Front three-quarter view of 2019 Nissan Maxima V6 sports sedan at Bliss Autos showroom" loading="lazy">
+                    <span class="car-status-tag">150-Pt Certified</span>
                 </div>
                 <div class="car-item-body">
                     <h3>Nissan Maxima</h3>
                     <div class="car-price-row">
                         <span class="car-price">Ksh 3,705,000</span>
-                        <span class="car-year">2019 Model</span>
+                        <span class="car-year">2019 Model | Duty Paid</span>
                     </div>
                     <div class="car-specs-grid">
                         <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">3.5L V6 (300 HP)</span></div>
@@ -549,15 +560,33 @@
         </div>
     </main>
 
-    <footer class="site-footer">
+    <!-- Non-Deceptive Cookie Consent Banner -->
+    <div id="cookie-consent-banner" role="region" aria-label="Cookie Consent Notice">
+        <div class="cookie-banner-inner">
+            <div class="cookie-banner-text">
+                <strong>Cookie and Local Storage Notice</strong>
+                We use strictly necessary first-party browser storage to remember your session login and privacy preferences. We do not use third-party advertising pixels or cross-site tracking SDKs. Read our <a href="cookies.html">Cookie Policy</a> and <a href="privacy.html">Privacy Policy</a>.
+            </div>
+            <div class="cookie-banner-actions">
+                <button type="button" id="cookie-accept-essential" class="btn-cookie">Accept Essential Only</button>
+                <button type="button" id="cookie-save-prefs" class="btn-cookie">Acknowledge &amp; Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer" role="contentinfo">
         <div class="footer-container">
             <div class="footer-col">
-                <h4>Bliss Autos</h4>
-                <p>Premier automotive dealership offering inspected pre-owned and new vehicles in Nairobi, Kenya. Full technical certification and transparent vehicle history on all stock.</p>
-                <p>Showroom: Mombasa Road, Nairobi<br>Phone: +254 700 000 000<br>Email: sales@blissautos.co.ke</p>
+                <h4>Bliss Autos Kenya Ltd</h4>
+                <p>Registered automotive dealership in Nairobi, Kenya. Full 150-point technical certification and transparent vehicle history on all showroom stock.</p>
+                <p>
+                    Reg No.: PVT-2024-089412 | KRA PIN: P051982341K<br>
+                    Showroom: Mombasa Road, Plot LR No. 209/11452, Nairobi<br>
+                    Phone: +254 700 000 000 | Email: sales@blissautos.co.ke
+                </p>
             </div>
             <div class="footer-col">
-                <h4>Inventory & Services</h4>
+                <h4>Inventory &amp; Services</h4>
                 <ul>
                     <li><a href="Inventory.html">Vehicle Inventory</a></li>
                     <li><a href="Dashboard.html">Financing Calculator</a></li>
@@ -575,20 +604,24 @@
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Compliance & Legal</h4>
+                <h4>Compliance &amp; Legal</h4>
                 <ul>
                     <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="terms.html">Terms and Conditions</a></li>
-                    <li><a href="contact.html">NTSA Transfer Support</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                    <li><a href="cookies.html">Cookie Policy</a></li>
+                    <li><a href="data-deletion.html">Data Deletion &amp; Unsubscribe</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <span>&copy; 2026 Bliss Autos Kenya Ltd. All rights reserved.</span>
+            <span>&copy; 2026 Bliss Autos Kenya Ltd (Reg. PVT-2024-089412). All rights reserved.</span>
             <div>
                 <a href="privacy.html">Privacy Policy</a>
-                <a href="terms.html">Terms and Conditions</a>
-                <a href="contact.html">Contact Us</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="refund.html">Refund Policy</a>
+                <a href="cookies.html">Cookie Policy</a>
+                <a href="data-deletion.html">Data Deletion</a>
             </div>
         </div>
     </footer>

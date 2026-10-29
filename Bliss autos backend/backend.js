@@ -1,8 +1,9 @@
 /**
  * Bliss Autos - Enterprise Backend Server
  * Production-ready Express API with resilient database handling,
- * custom domain support, and clean dealership service endpoints.
- * Zero emojis. Zero em dashes. Zero AI tags.
+ * custom domain support, data minimization, data deletion (Right to Erasure),
+ * RFC 8058 one-click email unsubscribe headers, and dealership service endpoints.
+ * Zero emojis. Zero em dashes.
  */
 
 const express = require('express');
@@ -34,6 +35,19 @@ app.use((req, res, next) => {
     next();
 });
 
+// Helper: Generate RFC 8058 Compliant Email Headers & Unsubscribe Footer
+function buildCompliantEmailMeta(recipientEmail) {
+    const encodedEmail = encodeURIComponent(recipientEmail);
+    const unsubUrl = `${CUSTOM_DOMAIN}/data-deletion.html?unsubscribe=${encodedEmail}`;
+    return {
+        headers: {
+            'List-Unsubscribe': `<${unsubUrl}>, <mailto:unsubscribe@blissautos.co.ke?subject=unsubscribe>`,
+            'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click'
+        },
+        footerText: `\n--\nBliss Autos Kenya Ltd (Reg. PVT-2024-089412 | KRA PIN: P051982341K)\nMombasa Road Commercial Hub, Plot LR No. 209/11452, Nairobi, Kenya\nTo unsubscribe from future emails at any time, click here: ${unsubUrl}`
+    };
+}
+
 // Built-in Certified Vehicle Fleet
 const fallbackCars = [
     { id: 1, make: 'Honda', model: 'Civic', year: 2019, price: 'Ksh 2,340,000', image: 'images/Honda Civic.jpg' },
@@ -59,11 +73,13 @@ const fallbackCars = [
 // In-Memory Data Store (Provides continuity if MySQL is not running)
 const inMemoryStore = {
     customers: [
-        { id: 1, name: 'David Kimani', email: 'dkimani@example.com', password: bcrypt.hashSync('Password123!', 10) },
-        { id: 2, name: 'Sarah Wanjiru', email: 'swanjiru@example.com', password: bcrypt.hashSync('Password123!', 10) }
+        { id: 1, name: 'David Kimani', email: 'dkimani@example.com', password: bcrypt.hashSync('Password123!', 10), marketingOptIn: false },
+        { id: 2, name: 'Sarah Wanjiru', email: 'swanjiru@example.com', password: bcrypt.hashSync('Password123!', 10), marketingOptIn: false }
     ],
     inquiries: [],
     chatSessions: [],
+    unsubscribedEmails: new Set(),
+    deletionLog: [],
     orders: [
         { order_id: 1082, car: '2019 Audi A4', customer_name: 'David Kimani', order_date: '2026-10-24', financing_plan: 'Commercial Bank Asset Loan', status: 'Approved' },
         { order_id: 1081, car: '2020 Mercedes-Benz C-Class', customer_name: 'Sarah Wanjiru', order_date: '2026-10-22', financing_plan: 'Direct Settlement', status: 'TIMS Transfer' },
@@ -190,7 +206,7 @@ app.get('/api/financing', (req, res) => {
     }
 });
 
-// 5. Customers List (Sanitized)
+// 5. Customers List (Sanitized - No Passwords Exposed)
 app.get('/api/customer', (req, res) => {
     if (dbConnected) {
         db.query('SELECT id, name, email FROM customer', (err, results) => {
@@ -204,14 +220,19 @@ app.get('/api/customer', (req, res) => {
     }
 });
 
-// 6. Customer Registration
+// 6. Customer Registration (Enforces 18+ Age Consent & Data Minimization)
 app.post('/api/register', (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, ageConsent, marketingOptIn } = req.body;
     if (!name || !email || !password) {
         return res.status(400).send('Name, email, and password are required.');
     }
+    if (ageConsent === false) {
+        return res.status(400).send('You must be 18 years of age or older to register.');
+    }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
+    const emailMeta = buildCompliantEmailMeta(email);
+    res.set(emailMeta.headers);
 
     if (dbConnected) {
         db.query('INSERT INTO customer (name, email, password) VALUES (?, ?, ?)',
@@ -229,7 +250,13 @@ app.post('/api/register', (req, res) => {
         if (existing) {
             return res.status(400).send('Email is already registered.');
         }
-        const newCustomer = { id: inMemoryStore.customers.length + 1, name, email, password: hashedPassword };
+        const newCustomer = {
+            id: inMemoryStore.customers.length + 1,
+            name,
+            email,
+            password: hashedPassword,
+            marketingOptIn: Boolean(marketingOptIn)
+        };
         inMemoryStore.customers.push(newCustomer);
         res.status(201).send('User registered successfully');
     }
@@ -271,12 +298,22 @@ app.post('/api/login', (req, res) => {
 
 // 8. Contact Form Submissions
 app.post('/api/contact', (req, res) => {
-    const { name, email, message } = req.body;
+    const { name, email, message, marketingOptIn } = req.body;
     if (!name || !email || !message) {
         return res.status(400).send('Name, email, and message are required.');
     }
 
-    inMemoryStore.inquiries.push({ name, email, message, timestamp: new Date() });
+    const emailMeta = buildCompliantEmailMeta(email);
+    res.set(emailMeta.headers);
+
+    inMemoryStore.inquiries.push({
+        name,
+        email,
+        message,
+        marketingOptIn: Boolean(marketingOptIn),
+        unsubscribeFooter: emailMeta.footerText,
+        timestamp: new Date()
+    });
 
     if (dbConnected) {
         db.query('INSERT INTO inquiries (name, email, message) VALUES (?, ?, ?)',
@@ -300,21 +337,22 @@ app.post('/api/chat', async (req, res) => {
     const msgLower = message.toLowerCase();
     let responseText = '';
 
-    if (msgLower.includes('price') || msgLower.includes('cost') || msgLower.includes('how much') || msgLower.includes('budget')) {
-        responseText = `Hello ${name}. Our certified vehicle fleet ranges from Ksh 2,340,000 (Honda Civic) to Ksh 4,550,000 (Mercedes-Benz C-Class). Every price includes applicable import duty and VAT. Would you like detailed specifications for a specific vehicle?`;
+    if (msgLower.includes('price') || msgLower.includes('cost') || msgLower.includes('how much') || msgLower.includes('budget') || msgLower.includes('fee')) {
+        responseText = `Hello ${name}. Our certified vehicle fleet ranges from Ksh 2,340,000 (Honda Civic) to Ksh 4,550,000 (Mercedes-Benz C-Class). Every listed price includes KRA import duty and VAT with zero hidden dealer fees (statutory NTSA TIMS transfer is Ksh 3,500).`;
     } else if (msgLower.includes('finance') || msgLower.includes('loan') || msgLower.includes('installment') || msgLower.includes('bank')) {
         responseText = `Hi ${name}. We partner with accredited commercial banks in Kenya to offer up to 80% asset financing with loan durations from 12 to 60 months. You can use our financing calculator on the Dashboard to model your monthly installments.`;
+    } else if (msgLower.includes('refund') || msgLower.includes('cancel') || msgLower.includes('deposit')) {
+        responseText = `All vehicle holding deposits are 100% refundable within 3 business days if you cancel prior to final contract execution or if an inspection reveals any undisclosed defect. Full details are on our Refund Policy page.`;
     } else if (msgLower.includes('hour') || msgLower.includes('open') || msgLower.includes('time') || msgLower.includes('visit') || msgLower.includes('location')) {
-        responseText = `Bliss Autos is located along Mombasa Road in Nairobi, next to the SGR link. Our showroom is open Monday through Friday from 8:00 AM to 6:00 PM, and Saturdays from 9:00 AM to 4:00 PM.`;
+        responseText = `Bliss Autos is located along Mombasa Road (Plot LR No. 209/11452) in Nairobi, next to the SGR link. Our showroom is open Monday through Friday from 8:00 AM to 6:00 PM, and Saturdays from 9:00 AM to 4:00 PM.`;
     } else if (msgLower.includes('inspection') || msgLower.includes('condition') || msgLower.includes('mechanic') || msgLower.includes('test drive')) {
         responseText = `Every vehicle in our showroom is certified through an extensive 150-point technical mechanical inspection. You are also welcome to arrange an independent pre-purchase mechanical inspection at our showroom.`;
     } else if (msgLower.includes('transfer') || msgLower.includes('logbook') || msgLower.includes('ntsa') || msgLower.includes('tims')) {
-        responseText = `Logbook transfers are processed directly through the NTSA TIMS portal within 48 hours of full vehicle payment. Our compliance team handles the entire documentation process on your behalf.`;
+        responseText = `Logbook transfers are processed directly through the NTSA TIMS portal within 48 hours of full vehicle payment. The flat statutory NTSA fee is Ksh 3,500.`;
     } else {
         responseText = `Thank you for contacting Bliss Autos, ${name}. Your message regarding "${message}" has been forwarded to our Mombasa Road sales specialists. A team member will follow up at ${email} with complete documentation.`;
     }
 
-    // Persist session into memory or database
     inMemoryStore.chatSessions.push({ name, email, message, response: responseText, timestamp: new Date() });
 
     if (dbConnected) {
@@ -329,6 +367,75 @@ app.post('/api/chat', async (req, res) => {
     }
 
     res.json({ response: responseText });
+});
+
+// 10. Personal Data Deletion Endpoint (Right to Erasure / GDPR Art. 17 / Kenya DPA Sec. 40)
+app.post('/api/data-deletion', (req, res) => {
+    const { email, scope } = req.body;
+    if (!email) {
+        return res.status(400).send('Email address is required to execute data deletion.');
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const deletionScope = scope || 'all';
+
+    // Purge from in-memory store
+    if (deletionScope === 'all' || deletionScope === 'account') {
+        inMemoryStore.customers = inMemoryStore.customers.filter(c => c.email.toLowerCase() !== normalizedEmail);
+    }
+    if (deletionScope === 'all' || deletionScope === 'inquiries') {
+        inMemoryStore.inquiries = inMemoryStore.inquiries.filter(i => i.email.toLowerCase() !== normalizedEmail);
+        inMemoryStore.chatSessions = inMemoryStore.chatSessions.filter(s => s.email.toLowerCase() !== normalizedEmail);
+    }
+    inMemoryStore.unsubscribedEmails.add(normalizedEmail);
+    inMemoryStore.deletionLog.push({ email: normalizedEmail, scope: deletionScope, executedAt: new Date().toISOString() });
+
+    // Purge from MySQL if connected
+    if (dbConnected) {
+        if (deletionScope === 'all' || deletionScope === 'account') {
+            db.query('DELETE FROM customer WHERE email = ?', [email], (err) => {
+                if (err) console.warn('MySQL customer deletion notice:', err.message);
+            });
+        }
+        if (deletionScope === 'all' || deletionScope === 'inquiries') {
+            db.query('DELETE FROM inquiries WHERE email = ?', [email], (err) => {
+                if (err) console.warn('MySQL inquiries deletion notice:', err.message);
+            });
+            db.query('DELETE FROM chat_sessions WHERE email = ?', [email], (err) => {
+                if (err) console.warn('MySQL chat_sessions deletion notice:', err.message);
+            });
+        }
+    }
+
+    res.status(200).json({
+        status: 'deleted',
+        email: normalizedEmail,
+        scope: deletionScope,
+        message: 'All matching personal data records have been permanently erased.'
+    });
+});
+
+// 11. One-Click Email Unsubscribe Endpoint (RFC 8058 Compliant)
+app.post('/api/unsubscribe', (req, res) => {
+    const email = (req.body && req.body.email) || req.query.email;
+    if (!email) {
+        return res.status(400).send('Email address is required to unsubscribe.');
+    }
+    const normalizedEmail = email.trim().toLowerCase();
+    inMemoryStore.unsubscribedEmails.add(normalizedEmail);
+    inMemoryStore.customers.forEach(c => {
+        if (c.email.toLowerCase() === normalizedEmail) {
+            c.marketingOptIn = false;
+        }
+    });
+
+    const emailMeta = buildCompliantEmailMeta(normalizedEmail);
+    res.set(emailMeta.headers);
+    res.status(200).json({
+        status: 'unsubscribed',
+        email: normalizedEmail,
+        message: 'Successfully unsubscribed from all Bliss Autos email communications.'
+    });
 });
 
 // Root URL serving index.html

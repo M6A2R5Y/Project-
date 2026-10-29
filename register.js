@@ -8,8 +8,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const name = document.getElementById('name').value.trim();
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('password').value;
+        const consentBox = document.getElementById('register-consent');
+        const marketingBox = document.getElementById('register-marketing-optin');
         const feedback = document.getElementById('register-feedback');
         const submitBtn = document.getElementById('register-btn');
+
+        if (consentBox && !consentBox.checked) {
+            showError('Please confirm that you are 18 years of age or older and agree to our Privacy Policy, Terms of Service, and Refund Policy.');
+            return;
+        }
 
         if (password.length < 6) {
             showError('Password must contain at least 6 characters.');
@@ -31,14 +38,20 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name, email, password })
+            body: JSON.stringify({
+                name,
+                email,
+                password,
+                ageConsent: true,
+                marketingOptIn: marketingBox ? marketingBox.checked : false
+            })
         })
         .then(async response => {
             if (response.ok) {
                 if (feedback) {
                     feedback.style.display = 'block';
                     feedback.style.backgroundColor = '#dcfce7';
-                    feedback.style.color = '#166534';
+                    feedback.style.color = '#14532d';
                     feedback.textContent = 'Account created successfully! Redirecting to login...';
                 }
                 setTimeout(() => {

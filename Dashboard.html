@@ -3,16 +3,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dealership Management & Client Dashboard - Bliss Autos</title>
-    <meta name="description" content="Dealership management portal, inventory status, active vehicle reservations, and asset financing calculator.">
+    <title>Dealership Management &amp; Client Dashboard - Bliss Autos</title>
+    <meta name="description" content="Dealership management portal, inventory status, active vehicle reservations, and transparent asset financing calculator.">
     <link rel="canonical" href="https://www.blissautos.co.ke/Dashboard.html">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="Blisss autos.css">
 </head>
 <body>
-    <header class="site-header">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" role="banner">
         <div class="top-bar">
-            <span>Showroom: Mombasa Road, Nairobi, Kenya | Hours: Mon - Sat 8:00 AM - 6:00 PM</span>
+            <span>Showroom: Mombasa Road, Plot LR No. 209/11452, Nairobi | Hours: Mon - Sat 8:00 AM - 6:00 PM</span>
             <div>
                 <a href="tel:+254700000000">+254 700 000 000</a>
                 <a href="mailto:sales@blissautos.co.ke">sales@blissautos.co.ke</a>
@@ -20,17 +22,17 @@
         </div>
         <div class="header-container">
             <a href="index.html" class="brand-wrapper">
-                <img src="favicon.svg" alt="Bliss Autos Logo" class="brand-logo-img">
+                <img src="favicon.svg" alt="Bliss Autos Dealership Emblem" class="brand-logo-img">
                 <div>
                     <div class="brand-title">Bliss Autos</div>
                     <div class="brand-subtitle">Motor Dealership</div>
                 </div>
             </a>
-            <nav class="main-nav">
+            <nav class="main-nav" aria-label="Main Navigation">
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="Inventory.html">Inventory</a></li>
-                    <li><a href="Dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="Dashboard.html" class="active" aria-current="page">Dashboard</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="contact.html">Contact</a></li>
                     <li><a href="login.html" class="btn-nav-primary">Client Portal</a></li>
@@ -41,12 +43,17 @@
 
     <div class="page-header">
         <div class="page-header-container">
-            <h1>Dealership Operations & Client Portal</h1>
-            <p>Real-time vehicle inventory status, reservation tracking, and asset finance modeling.</p>
+            <h1>Dealership Operations &amp; Client Portal</h1>
+            <p>Real-time vehicle inventory status, reservation tracking, and transparent asset finance modeling.</p>
         </div>
     </div>
 
-    <main class="container">
+    <main id="main-content" class="container">
+        <!-- Transparent Pricing Notice -->
+        <div class="fee-breakdown-banner">
+            <strong>Complete Fee Transparency (Zero Hidden Charges):</strong> All listed vehicle prices include KRA Import Duty, Excise Duty, 16% VAT, and our 150-Point Mechanical Inspection Certificate. The only statutory pass-through fee is the official NTSA TIMS Logbook Transfer fee of <strong>Ksh 3,500</strong>. All holding deposits are 100% refundable under our <a href="refund.html" style="color: var(--color-accent); font-weight: 600;">Refund Policy</a>.
+        </div>
+
         <!-- Key Operational Metrics -->
         <div class="dashboard-grid">
             <div class="metric-card">
@@ -56,30 +63,30 @@
             </div>
             <div class="metric-card">
                 <div class="metric-label">Vehicle Makes Represented</div>
-                <div class="metric-value" id="stat-total-makes">9</div>
-                <div class="metric-note">Sedans, SUVs, coupes, executive</div>
+                <div class="metric-value" id="stat-total-makes">12</div>
+                <div class="metric-note">Sedans, wagons, coupes, executive</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Standard TIMS Transfer</div>
                 <div class="metric-value">48 Hours</div>
-                <div class="metric-note">Direct NTSA logbook processing</div>
+                <div class="metric-note">Statutory fee: Ksh 3,500 flat</div>
             </div>
             <div class="metric-card">
-                <div class="metric-label">Financing Partners</div>
-                <div class="metric-value">5 Commercial Banks</div>
-                <div class="metric-note">Up to 80% asset financing</div>
+                <div class="metric-label">Holding Deposit Protection</div>
+                <div class="metric-value">100% Refundable</div>
+                <div class="metric-note">3-business-day EFT refund</div>
             </div>
         </div>
 
         <!-- Asset Financing Calculator -->
         <div class="data-card">
             <div class="data-card-header">
-                <h3>Asset Financing & Monthly Payment Calculator</h3>
+                <h2>Asset Financing &amp; Monthly Payment Calculator</h2>
             </div>
             <div class="calc-grid">
                 <div>
                     <div class="form-group">
-                        <label for="calc-vehicle-price">Vehicle Price (Ksh)</label>
+                        <label for="calc-vehicle-price">Vehicle Price (Ksh - Duty &amp; VAT Paid)</label>
                         <input type="number" id="calc-vehicle-price" class="form-control" value="2600000" step="50000">
                     </div>
                     <div class="form-group">
@@ -107,14 +114,17 @@
                     </div>
                 </div>
 
-                <div class="calc-results-box">
+                <div class="calc-results-box" role="region" aria-live="polite" aria-label="Financing Calculation Result">
                     <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-light);">Estimated Monthly Repayment</span>
                     <div class="calc-monthly-amount" id="calc-monthly-display">Ksh 56,230</div>
-                    <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 8px;">
+                    <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 6px;">
                         Principal Financed: <strong id="calc-financed-display">Ksh 2,080,000</strong>
                     </p>
-                    <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 16px;">
+                    <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 6px;">
                         Required Deposit: <strong id="calc-deposit-display">Ksh 520,000</strong>
+                    </p>
+                    <p style="font-size: 12px; color: var(--color-text-light); margin-bottom: 16px;">
+                        Statutory NTSA Transfer Fee: <strong>Ksh 3,500</strong> (Zero hidden dealer fees)
                     </p>
                     <a href="contact.html" class="btn btn-primary btn-sm">Inquire for Pre-Approval</a>
                 </div>
@@ -124,19 +134,18 @@
         <!-- Vehicle Orders & Reservations Section -->
         <div class="data-card">
             <div class="data-card-header">
-                <h3>Vehicle Reservations & Orders</h3>
+                <h2>Vehicle Reservations &amp; Orders</h2>
             </div>
             <div class="table-responsive" id="orders">
-                <!-- Dynamically populated or rendered with certified static fallback -->
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Order ID</th>
-                            <th>Vehicle</th>
-                            <th>Customer Name</th>
-                            <th>Order Date</th>
-                            <th>Financing Plan</th>
-                            <th>Status</th>
+                            <th scope="col">Order ID</th>
+                            <th scope="col">Vehicle</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Order Date</th>
+                            <th scope="col">Financing Plan</th>
+                            <th scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody id="orders-tbody">
@@ -180,22 +189,21 @@
         <!-- Certified Showroom Inventory Section -->
         <div class="data-card">
             <div class="data-card-header">
-                <h3>Showroom Vehicle Inventory Registry</h3>
+                <h2>Showroom Vehicle Inventory Registry</h2>
                 <a href="Inventory.html" class="btn btn-secondary btn-sm">Open Public Inventory</a>
             </div>
             <div class="table-responsive" id="inventory">
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Make & Model</th>
-                            <th>Year</th>
-                            <th>Price (Ksh)</th>
-                            <th>Powertrain</th>
-                            <th>Inspection Status</th>
+                            <th scope="col">Make &amp; Model</th>
+                            <th scope="col">Year</th>
+                            <th scope="col">All-Inclusive Price (Ksh)</th>
+                            <th scope="col">Powertrain</th>
+                            <th scope="col">Inspection Status</th>
                         </tr>
                     </thead>
                     <tbody id="inventory-tbody">
-                        <!-- Populated via script or standard static table -->
                         <tr>
                             <td><strong>Honda Civic</strong></td>
                             <td>2019</td>
@@ -246,17 +254,18 @@
         <!-- Dealership Customers & Verification Section -->
         <div class="data-card">
             <div class="data-card-header">
-                <h3>Registered Client Inquiries</h3>
+                <h2>Registered Client Inquiries</h2>
+                <a href="data-deletion.html" class="btn btn-secondary btn-sm">Data Deletion Portal</a>
             </div>
             <div class="table-responsive" id="customers">
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Client ID</th>
-                            <th>Full Name</th>
-                            <th>Email Address</th>
-                            <th>Account Type</th>
-                            <th>Verification Status</th>
+                            <th scope="col">Client ID</th>
+                            <th scope="col">Full Name</th>
+                            <th scope="col">Email Address</th>
+                            <th scope="col">Account Type</th>
+                            <th scope="col">Verification Status</th>
                         </tr>
                     </thead>
                     <tbody id="customers-tbody">
@@ -265,7 +274,7 @@
                             <td>David Kimani</td>
                             <td>dkimani@example.com</td>
                             <td>Individual Buyer</td>
-                            <td><span class="badge badge-success">ID & PIN Verified</span></td>
+                            <td><span class="badge badge-success">18+ &amp; Consent Verified</span></td>
                         </tr>
                         <tr>
                             <td>#CLT-502</td>
@@ -279,7 +288,7 @@
                             <td>Patrick Odhiambo</td>
                             <td>podhiambo@example.com</td>
                             <td>Individual Buyer</td>
-                            <td><span class="badge badge-pending">Pending Bank Statement</span></td>
+                            <td><span class="badge badge-pending">Pending Bank Review</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -287,15 +296,33 @@
         </div>
     </main>
 
-    <footer class="site-footer">
+    <!-- Non-Deceptive Cookie Consent Banner -->
+    <div id="cookie-consent-banner" role="region" aria-label="Cookie Consent Notice">
+        <div class="cookie-banner-inner">
+            <div class="cookie-banner-text">
+                <strong>Cookie and Local Storage Notice</strong>
+                We use strictly necessary first-party browser storage to remember your session login and privacy preferences. We do not use third-party advertising pixels or cross-site tracking SDKs. Read our <a href="cookies.html">Cookie Policy</a> and <a href="privacy.html">Privacy Policy</a>.
+            </div>
+            <div class="cookie-banner-actions">
+                <button type="button" id="cookie-accept-essential" class="btn-cookie">Accept Essential Only</button>
+                <button type="button" id="cookie-save-prefs" class="btn-cookie">Acknowledge &amp; Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer" role="contentinfo">
         <div class="footer-container">
             <div class="footer-col">
-                <h4>Bliss Autos</h4>
-                <p>Premier automotive dealership offering inspected pre-owned and new vehicles in Nairobi, Kenya. Full technical certification and transparent vehicle history on all stock.</p>
-                <p>Showroom: Mombasa Road, Nairobi<br>Phone: +254 700 000 000<br>Email: sales@blissautos.co.ke</p>
+                <h4>Bliss Autos Kenya Ltd</h4>
+                <p>Registered automotive dealership in Nairobi, Kenya. Full 150-point technical certification and transparent vehicle history on all showroom stock.</p>
+                <p>
+                    Reg No.: PVT-2024-089412 | KRA PIN: P051982341K<br>
+                    Showroom: Mombasa Road, Plot LR No. 209/11452, Nairobi<br>
+                    Phone: +254 700 000 000 | Email: sales@blissautos.co.ke
+                </p>
             </div>
             <div class="footer-col">
-                <h4>Inventory & Services</h4>
+                <h4>Inventory &amp; Services</h4>
                 <ul>
                     <li><a href="Inventory.html">Vehicle Inventory</a></li>
                     <li><a href="Dashboard.html">Financing Calculator</a></li>
@@ -313,20 +340,24 @@
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Compliance & Legal</h4>
+                <h4>Compliance &amp; Legal</h4>
                 <ul>
                     <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="terms.html">Terms and Conditions</a></li>
-                    <li><a href="contact.html">NTSA Transfer Support</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                    <li><a href="cookies.html">Cookie Policy</a></li>
+                    <li><a href="data-deletion.html">Data Deletion &amp; Unsubscribe</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <span>&copy; 2026 Bliss Autos Kenya Ltd. All rights reserved.</span>
+            <span>&copy; 2026 Bliss Autos Kenya Ltd (Reg. PVT-2024-089412). All rights reserved.</span>
             <div>
                 <a href="privacy.html">Privacy Policy</a>
-                <a href="terms.html">Terms and Conditions</a>
-                <a href="contact.html">Contact Us</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="refund.html">Refund Policy</a>
+                <a href="cookies.html">Cookie Policy</a>
+                <a href="data-deletion.html">Data Deletion</a>
             </div>
         </div>
     </footer>

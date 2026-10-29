@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Policy and Third-Party SDK Audit - Bliss Autos</title>
+    <meta name="description" content="Cookie Policy and Third-Party SDK Audit for Bliss Autos Kenya Ltd. Strictly essential first-party storage only with zero advertising trackers.">
+    <link rel="canonical" href="https://www.blissautos.co.ke/cookies.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="Blisss autos.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" role="banner">
+        <div class="top-bar">
+            <span>Showroom: Mombasa Road, Plot LR No. 209/11452, Nairobi | Hours: Mon - Sat 8:00 AM - 6:00 PM</span>
+            <div>
+                <a href="tel:+254700000000">+254 700 000 000</a>
+                <a href="mailto:sales@blissautos.co.ke">sales@blissautos.co.ke</a>
+            </div>
+        </div>
+        <div class="header-container">
+            <a href="index.html" class="brand-wrapper">
+                <img src="favicon.svg" alt="Bliss Autos Dealership Emblem" class="brand-logo-img">
+                <div>
+                    <div class="brand-title">Bliss Autos</div>
+                    <div class="brand-subtitle">Motor Dealership</div>
+                </div>
+            </a>
+            <nav class="main-nav" aria-label="Main Navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Inventory.html">Inventory</a></li>
+                    <li><a href="Dashboard.html">Dashboard</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html" class="btn-nav-primary">Client Portal</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="page-header-container">
+            <h1>Cookie Policy and Third-Party SDK Audit</h1>
+            <p>Effective Date: January 1, 2026 | Last Updated: October 29, 2026 | Zero Third-Party Tracking Pixels</p>
+        </div>
+    </div>
+
+    <main id="main-content" class="container">
+        <div class="content-box">
+            <h2>1. Overview of Our Storage Principles</h2>
+            <p>Bliss Autos Kenya Ltd ("Bliss Autos") operates under a strict data-minimization and privacy-by-design architecture. Our website (https://www.blissautos.co.ke) uses only strictly necessary first-party browser `localStorage` entries required to operate client authentication and remember your cookie banner acknowledgement.</p>
+            <p>We do <strong>not</strong> deploy third-party advertising cookies, cross-site behavioural profiling pixels, session replay scripts, or device fingerprinting tools.</p>
+
+            <h2>2. Complete Inventory of First-Party Storage Keys</h2>
+            <p>Below is the exhaustive list of first-party browser storage keys used by this platform:</p>
+            <div class="table-responsive" style="margin: 16px 0 24px;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Storage Key</th>
+                            <th>Type</th>
+                            <th>Category</th>
+                            <th>Purpose</th>
+                            <th>Lifespan / Expiry</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>bliss_cookie_consent</code></td>
+                            <td>First-Party LocalStorage</td>
+                            <td>Strictly Essential</td>
+                            <td>Records that you have reviewed and dismissed the cookie notice banner so it does not obstruct navigation on every page load.</td>
+                            <td>Until cleared by user</td>
+                        </tr>
+                        <tr>
+                            <td><code>authToken</code></td>
+                            <td>First-Party LocalStorage</td>
+                            <td>Strictly Essential</td>
+                            <td>Stores your signed JSON Web Token (JWT) when you explicitly sign in to the Client Portal.</td>
+                            <td>8 hours (server-enforced JWT expiry)</td>
+                        </tr>
+                        <tr>
+                            <td><code>userEmail</code></td>
+                            <td>First-Party LocalStorage</td>
+                            <td>Strictly Essential</td>
+                            <td>Identifies the active signed-in client profile on the Dashboard.</td>
+                            <td>Cleared upon logout or deletion</td>
+                        </tr>
+                        <tr>
+                            <td><code>chat_customer_name</code> / <code>chat_customer_email</code></td>
+                            <td>First-Party LocalStorage</td>
+                            <td>Functional (Opt-In)</td>
+                            <td>Set only if you explicitly submit the Support Desk intake form and tick the consent box.</td>
+                            <td>Until cleared via browser or button below</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>3. Third-Party SDK and External Request Audit</h2>
+            <p>We perform automated deterministic audits across all HTML, CSS, and JavaScript files to verify that zero unauthorized third-party SDKs are loaded:</p>
+            <ul>
+                <li><strong>Analytics &amp; Telemetry SDKs:</strong> None (0). No Google Analytics, Google Tag Manager, Mixpanel, Segment, or Hotjar scripts are included.</li>
+                <li><strong>Advertising &amp; Retargeting Networks:</strong> None (0). No Meta/Facebook Pixel, DoubleClick, TikTok Pixel, or LinkedIn Insight tags are present.</li>
+                <li><strong>External Font Trackers:</strong> None (0). We use a native operating-system font stack (<code>-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif</code>) so your browser never transmits your IP address to external font CDNs.</li>
+                <li><strong>Embedded Media:</strong> Vehicle photographs and SVG icons are hosted 100% locally on our first-party origin without external iframe embeds that set third-party cookies on page load.</li>
+            </ul>
+
+            <h2>4. Manage or Clear Your Browser Storage Immediately</h2>
+            <p>You can clear all first-party storage keys set by Bliss Autos at any time with a single click below, or via your browser settings:</p>
+            <div style="margin: 16px 0 24px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                <button type="button" id="clear-all-storage-btn" class="btn btn-primary" onclick="clearBlissStorage()">Clear All Bliss Autos Local Storage &amp; Session Data</button>
+                <span id="clear-storage-feedback" role="status" aria-live="polite" style="font-size: 13px; font-weight: 600; color: var(--color-success);"></span>
+            </div>
+
+            <h2>5. Contact Our Data Protection Officer</h2>
+            <p>
+                <strong>Bliss Autos Kenya Ltd - Data Compliance Office</strong><br>
+                Company Registration No.: PVT-2024-089412 | KRA PIN: P051982341K<br>
+                Mombasa Road Commercial Hub, Ground Floor, Plot LR No. 209/11452<br>
+                P.O. Box 48210 - 00100, Nairobi, Kenya<br>
+                Email: <a href="mailto:privacy@blissautos.co.ke">privacy@blissautos.co.ke</a> | Telephone: +254 700 000 000
+            </p>
+        </div>
+    </main>
+
+    <!-- Non-Deceptive Cookie Consent Banner -->
+    <div id="cookie-consent-banner" role="region" aria-label="Cookie Consent Notice">
+        <div class="cookie-banner-inner">
+            <div class="cookie-banner-text">
+                <strong>Cookie and Local Storage Notice</strong>
+                We use strictly necessary first-party browser storage to remember your session login and privacy preferences. We do not use third-party advertising pixels or cross-site tracking SDKs. Read our <a href="cookies.html">Cookie Policy</a> and <a href="privacy.html">Privacy Policy</a>.
+            </div>
+            <div class="cookie-banner-actions">
+                <button type="button" id="cookie-accept-essential" class="btn-cookie">Accept Essential Only</button>
+                <button type="button" id="cookie-save-prefs" class="btn-cookie">Acknowledge &amp; Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Bliss Autos Kenya Ltd</h4>
+                <p>Registered automotive dealership in Nairobi, Kenya. Full 150-point technical certification and transparent vehicle history on all showroom stock.</p>
+                <p>
+                    Reg No.: PVT-2024-089412 | KRA PIN: P051982341K<br>
+                    Showroom: Mombasa Road, Plot LR No. 209/11452, Nairobi<br>
+                    Phone: +254 700 000 000 | Email: sales@blissautos.co.ke
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Inventory &amp; Services</h4>
+                <ul>
+                    <li><a href="Inventory.html">Vehicle Inventory</a></li>
+                    <li><a href="Dashboard.html">Financing Calculator</a></li>
+                    <li><a href="Dashboard.html">Inspection Reports</a></li>
+                    <li><a href="contact.html">Schedule a Test Drive</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Dealership</h4>
+                <ul>
+                    <li><a href="about.html">About Bliss Autos</a></li>
+                    <li><a href="contact.html">Customer Inquiries</a></li>
+                    <li><a href="login.html">Client Portal</a></li>
+                    <li><a href="Register.html">Create Account</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Compliance &amp; Legal</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                    <li><a href="cookies.html">Cookie Policy</a></li>
+                    <li><a href="data-deletion.html">Data Deletion &amp; Unsubscribe</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Bliss Autos Kenya Ltd (Reg. PVT-2024-089412). All rights reserved.</span>
+            <div>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="refund.html">Refund Policy</a>
+                <a href="cookies.html">Cookie Policy</a>
+                <a href="data-deletion.html">Data Deletion</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="Bliss.js"></script>
+</body>
+</html>

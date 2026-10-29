@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Deletion and Email Unsubscribe Portal - Bliss Autos</title>
+    <meta name="description" content="Submit a Data Deletion Request under the Kenya Data Protection Act or manage your email subscription preferences with Bliss Autos Kenya Ltd.">
+    <link rel="canonical" href="https://www.blissautos.co.ke/data-deletion.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="Blisss autos.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" role="banner">
+        <div class="top-bar">
+            <span>Showroom: Mombasa Road, Plot LR No. 209/11452, Nairobi | Hours: Mon - Sat 8:00 AM - 6:00 PM</span>
+            <div>
+                <a href="tel:+254700000000">+254 700 000 000</a>
+                <a href="mailto:sales@blissautos.co.ke">sales@blissautos.co.ke</a>
+            </div>
+        </div>
+        <div class="header-container">
+            <a href="index.html" class="brand-wrapper">
+                <img src="favicon.svg" alt="Bliss Autos Dealership Emblem" class="brand-logo-img">
+                <div>
+                    <div class="brand-title">Bliss Autos</div>
+                    <div class="brand-subtitle">Motor Dealership</div>
+                </div>
+            </a>
+            <nav class="main-nav" aria-label="Main Navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Inventory.html">Inventory</a></li>
+                    <li><a href="Dashboard.html">Dashboard</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html" class="btn-nav-primary">Client Portal</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="page-header-container">
+            <h1>Data Deletion Requests &amp; Email Preferences</h1>
+            <p>Exercise your right to erasure (Right to be Forgotten) or unsubscribe from dealership email updates.</p>
+        </div>
+    </div>
+
+    <main id="main-content" class="container">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+            <!-- Personal Data Erasure Form -->
+            <div class="form-card" style="margin: 0; max-width: 100%;">
+                <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 6px; color: var(--color-primary);">Submit a Personal Data Deletion Request</h2>
+                <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 20px;">
+                    Under Section 40 of the Data Protection Act of Kenya (2019) and GDPR Article 17, you may request permanent deletion of your customer account, inquiry logs, and support desk records. Requests are executed immediately for active web records and confirmed within 72 hours.
+                </p>
+
+                <form id="deletion-form">
+                    <div class="form-group">
+                        <label for="del-email">Registered or Inquiry Email Address</label>
+                        <input type="email" id="del-email" name="email" class="form-control" placeholder="name@example.com" required autocomplete="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="del-scope">Scope of Erasure</label>
+                        <select id="del-scope" name="scope" class="form-control" required>
+                            <option value="all">Erase All Records (Account, Inquiries, and Support Logs)</option>
+                            <option value="inquiries">Erase Vehicle Inquiry &amp; Support Logs Only</option>
+                            <option value="account">Delete Client Portal Account Only</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="del-reason">Additional Instructions (Optional)</label>
+                        <textarea id="del-reason" name="reason" class="form-control" rows="3" placeholder="Optional reference note (no sensitive personal data required)..."></textarea>
+                    </div>
+
+                    <div class="consent-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="del-confirm" name="confirm" required>
+                            <span>I confirm that I am the authorized holder of this email address (18 years of age or older) and request permanent deletion of the selected records in accordance with the <a href="privacy.html">Privacy Policy</a>.</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" id="del-submit-btn" class="btn btn-primary btn-block">Execute Data Deletion Request</button>
+                    <div id="deletion-feedback" role="status" aria-live="polite" style="display: none; margin-top: 14px; padding: 10px; font-size: 13px; border-radius: 4px;"></div>
+                </form>
+            </div>
+
+            <!-- One-Click Email Unsubscribe & Subscription Management -->
+            <div>
+                <div class="form-card" style="margin: 0 0 24px 0; max-width: 100%;">
+                    <h2 style="font-size: 18px; font-weight: 700; margin-bottom: 6px; color: var(--color-primary);">Email Subscription &amp; Unsubscribe Portal</h2>
+                    <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 20px;">
+                        Every email sent by Bliss Autos contains a direct one-click unsubscribe link (and RFC 8058 <code>List-Unsubscribe</code> header). You can also unsubscribe or manage your email preferences directly below without logging in.
+                    </p>
+
+                    <form id="unsubscribe-form">
+                        <div class="form-group">
+                            <label for="unsub-email">Email Address to Unsubscribe</label>
+                            <input type="email" id="unsub-email" name="email" class="form-control" placeholder="name@example.com" required autocomplete="email">
+                        </div>
+
+                        <button type="submit" id="unsub-submit-btn" class="btn btn-secondary btn-block">Unsubscribe Immediately</button>
+                        <div id="unsubscribe-feedback" role="status" aria-live="polite" style="display: none; margin-top: 14px; padding: 10px; font-size: 13px; border-radius: 4px;"></div>
+                    </form>
+                </div>
+
+                <div class="content-box" style="margin-bottom: 0; padding: 24px;">
+                    <h2 style="font-size: 16px; margin-top: 0;">Statutory Retention Exceptions</h2>
+                    <p style="font-size: 13px; margin-bottom: 8px;">
+                        Where you have completed a physical motor vehicle purchase or NTSA TIMS logbook transfer, statutory tax invoices and transfer records are retained in an offline compliance archive for seven (7) years as required by the Kenya Revenue Authority (KRA) and the Proceeds of Crime and Anti-Money Laundering Act (POCAMLA). All web accounts, marketing preferences, and chat inquiries are erased immediately upon request.
+                    </p>
+                    <p style="font-size: 13px; margin-bottom: 0;">
+                        <strong>Data Protection Officer:</strong> <a href="mailto:privacy@blissautos.co.ke">privacy@blissautos.co.ke</a> | +254 700 000 000
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Non-Deceptive Cookie Consent Banner -->
+    <div id="cookie-consent-banner" role="region" aria-label="Cookie Consent Notice">
+        <div class="cookie-banner-inner">
+            <div class="cookie-banner-text">
+                <strong>Cookie and Local Storage Notice</strong>
+                We use strictly necessary first-party browser storage to remember your session login and privacy preferences. We do not use third-party advertising pixels or cross-site tracking SDKs. Read our <a href="cookies.html">Cookie Policy</a> and <a href="privacy.html">Privacy Policy</a>.
+            </div>
+            <div class="cookie-banner-actions">
+                <button type="button" id="cookie-accept-essential" class="btn-cookie">Accept Essential Only</button>
+                <button type="button" id="cookie-save-prefs" class="btn-cookie">Acknowledge &amp; Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Bliss Autos Kenya Ltd</h4>
+                <p>Registered automotive dealership in Nairobi, Kenya. Full 150-point technical certification and transparent vehicle history on all showroom stock.</p>
+                <p>
+                    Reg No.: PVT-2024-089412 | KRA PIN: P051982341K<br>
+                    Showroom: Mombasa Road, Plot LR No. 209/11452, Nairobi<br>
+                    Phone: +254 700 000 000 | Email: sales@blissautos.co.ke
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Inventory &amp; Services</h4>
+                <ul>
+                    <li><a href="Inventory.html">Vehicle Inventory</a></li>
+                    <li><a href="Dashboard.html">Financing Calculator</a></li>
+                    <li><a href="Dashboard.html">Inspection Reports</a></li>
+                    <li><a href="contact.html">Schedule a Test Drive</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Dealership</h4>
+                <ul>
+                    <li><a href="about.html">About Bliss Autos</a></li>
+                    <li><a href="contact.html">Customer Inquiries</a></li>
+                    <li><a href="login.html">Client Portal</a></li>
+                    <li><a href="Register.html">Create Account</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Compliance &amp; Legal</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                    <li><a href="cookies.html">Cookie Policy</a></li>
+                    <li><a href="data-deletion.html">Data Deletion &amp; Unsubscribe</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Bliss Autos Kenya Ltd (Reg. PVT-2024-089412). All rights reserved.</span>
+            <div>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="refund.html">Refund Policy</a>
+                <a href="cookies.html">Cookie Policy</a>
+                <a href="data-deletion.html">Data Deletion</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="Bliss.js"></script>
+</body>
+</html>
