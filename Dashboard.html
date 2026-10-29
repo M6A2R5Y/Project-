@@ -1,20 +1,336 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Bliss Autos Dashboard</title>
-  <link rel="stylesheet" href="Blisss autos.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dealership Management & Client Dashboard - Bliss Autos</title>
+    <meta name="description" content="Dealership management portal, inventory status, active vehicle reservations, and asset financing calculator.">
+    <link rel="canonical" href="https://www.blissautos.co.ke/Dashboard.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="Blisss autos.css">
 </head>
 <body>
-  <div id="orders">
+    <header class="site-header">
+        <div class="top-bar">
+            <span>Showroom: Mombasa Road, Nairobi, Kenya | Hours: Mon - Sat 8:00 AM - 6:00 PM</span>
+            <div>
+                <a href="tel:+254700000000">+254 700 000 000</a>
+                <a href="mailto:sales@blissautos.co.ke">sales@blissautos.co.ke</a>
+            </div>
+        </div>
+        <div class="header-container">
+            <a href="index.html" class="brand-wrapper">
+                <img src="favicon.svg" alt="Bliss Autos Logo" class="brand-logo-img">
+                <div>
+                    <div class="brand-title">Bliss Autos</div>
+                    <div class="brand-subtitle">Motor Dealership</div>
+                </div>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Inventory.html">Inventory</a></li>
+                    <li><a href="Dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html" class="btn-nav-primary">Client Portal</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="page-header-container">
+            <h1>Dealership Operations & Client Portal</h1>
+            <p>Real-time vehicle inventory status, reservation tracking, and asset finance modeling.</p>
+        </div>
     </div>
-  <div id="inventory">
-    </div>
-  <div id="customers">
-    </div>
-  <footer style="margin-top: 40px; padding: 20px; text-align: center;">
-    <p>&copy; 2024 Bliss Autos. All rights reserved.</p>
-    <p style="font-size: 12px; margin-top: 5px; opacity: 0.8;">Curated and developed by Kinyanjui</p>
-  </footer>
-  <script src="Bliss.js"></script>
+
+    <main class="container">
+        <!-- Key Operational Metrics -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-label">Showroom Inventory</div>
+                <div class="metric-value" id="stat-total-cars">18</div>
+                <div class="metric-note">Inspected and certified units</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Vehicle Makes Represented</div>
+                <div class="metric-value" id="stat-total-makes">9</div>
+                <div class="metric-note">Sedans, SUVs, coupes, executive</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Standard TIMS Transfer</div>
+                <div class="metric-value">48 Hours</div>
+                <div class="metric-note">Direct NTSA logbook processing</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Financing Partners</div>
+                <div class="metric-value">5 Commercial Banks</div>
+                <div class="metric-note">Up to 80% asset financing</div>
+            </div>
+        </div>
+
+        <!-- Asset Financing Calculator -->
+        <div class="data-card">
+            <div class="data-card-header">
+                <h3>Asset Financing & Monthly Payment Calculator</h3>
+            </div>
+            <div class="calc-grid">
+                <div>
+                    <div class="form-group">
+                        <label for="calc-vehicle-price">Vehicle Price (Ksh)</label>
+                        <input type="number" id="calc-vehicle-price" class="form-control" value="2600000" step="50000">
+                    </div>
+                    <div class="form-group">
+                        <label for="calc-deposit-pct">Down Payment (%)</label>
+                        <select id="calc-deposit-pct" class="form-control">
+                            <option value="10">10% Deposit (Ksh 260,000)</option>
+                            <option value="20" selected>20% Deposit (Ksh 520,000)</option>
+                            <option value="30">30% Deposit (Ksh 780,000)</option>
+                            <option value="40">40% Deposit (Ksh 1,040,000)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="calc-term">Repayment Duration</label>
+                        <select id="calc-term" class="form-control">
+                            <option value="12">12 Months (1 Year)</option>
+                            <option value="24">24 Months (2 Years)</option>
+                            <option value="36">36 Months (3 Years)</option>
+                            <option value="48" selected>48 Months (4 Years)</option>
+                            <option value="60">60 Months (5 Years)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="calc-interest-rate">Annual Interest Rate (%)</label>
+                        <input type="number" id="calc-interest-rate" class="form-control" value="13.5" step="0.5">
+                    </div>
+                </div>
+
+                <div class="calc-results-box">
+                    <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-light);">Estimated Monthly Repayment</span>
+                    <div class="calc-monthly-amount" id="calc-monthly-display">Ksh 56,230</div>
+                    <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 8px;">
+                        Principal Financed: <strong id="calc-financed-display">Ksh 2,080,000</strong>
+                    </p>
+                    <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 16px;">
+                        Required Deposit: <strong id="calc-deposit-display">Ksh 520,000</strong>
+                    </p>
+                    <a href="contact.html" class="btn btn-primary btn-sm">Inquire for Pre-Approval</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vehicle Orders & Reservations Section -->
+        <div class="data-card">
+            <div class="data-card-header">
+                <h3>Vehicle Reservations & Orders</h3>
+            </div>
+            <div class="table-responsive" id="orders">
+                <!-- Dynamically populated or rendered with certified static fallback -->
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Vehicle</th>
+                            <th>Customer Name</th>
+                            <th>Order Date</th>
+                            <th>Financing Plan</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-tbody">
+                        <tr>
+                            <td>#ORD-1082</td>
+                            <td><strong>2019 Audi A4 (Quattro)</strong></td>
+                            <td>David Kimani</td>
+                            <td>2026-10-24</td>
+                            <td>Commercial Bank Asset Loan</td>
+                            <td><span class="badge badge-success">Approved</span></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-1081</td>
+                            <td><strong>2020 Mercedes-Benz C-Class</strong></td>
+                            <td>Sarah Wanjiru</td>
+                            <td>2026-10-22</td>
+                            <td>Direct Settlement</td>
+                            <td><span class="badge badge-info">TIMS Transfer</span></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-1080</td>
+                            <td><strong>2021 Toyota Camry</strong></td>
+                            <td>Patrick Odhiambo</td>
+                            <td>2026-10-20</td>
+                            <td>Asset Finance (36 Mos)</td>
+                            <td><span class="badge badge-pending">Underwriting</span></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-1079</td>
+                            <td><strong>2019 Subaru Outback</strong></td>
+                            <td>Grace Mutiso</td>
+                            <td>2026-10-18</td>
+                            <td>Direct Settlement</td>
+                            <td><span class="badge badge-success">Delivered</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Certified Showroom Inventory Section -->
+        <div class="data-card">
+            <div class="data-card-header">
+                <h3>Showroom Vehicle Inventory Registry</h3>
+                <a href="Inventory.html" class="btn btn-secondary btn-sm">Open Public Inventory</a>
+            </div>
+            <div class="table-responsive" id="inventory">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Make & Model</th>
+                            <th>Year</th>
+                            <th>Price (Ksh)</th>
+                            <th>Powertrain</th>
+                            <th>Inspection Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-tbody">
+                        <!-- Populated via script or standard static table -->
+                        <tr>
+                            <td><strong>Honda Civic</strong></td>
+                            <td>2019</td>
+                            <td>Ksh 2,340,000</td>
+                            <td>1.5L Turbo, CVT</td>
+                            <td><span class="badge badge-success">150-Pt Certified</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Chevrolet Camaro</strong></td>
+                            <td>2020</td>
+                            <td>Ksh 3,640,000</td>
+                            <td>2.0L Turbo, 8-Speed Auto</td>
+                            <td><span class="badge badge-success">150-Pt Certified</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>BMW 3 Series</strong></td>
+                            <td>2018</td>
+                            <td>Ksh 3,250,000</td>
+                            <td>2.0L Twin-Turbo, RWD</td>
+                            <td><span class="badge badge-success">150-Pt Certified</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Toyota Corolla</strong></td>
+                            <td>2020</td>
+                            <td>Ksh 2,600,000</td>
+                            <td>1.8L 4-Cylinder, Dual VVT-i</td>
+                            <td><span class="badge badge-success">150-Pt Certified</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Audi A4</strong></td>
+                            <td>2019</td>
+                            <td>Ksh 3,510,000</td>
+                            <td>2.0L TFSI, Quattro AWD</td>
+                            <td><span class="badge badge-success">150-Pt Certified</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mercedes-Benz C-Class</strong></td>
+                            <td>2020</td>
+                            <td>Ksh 4,550,000</td>
+                            <td>2.0L Turbo, 9G-Tronic</td>
+                            <td><span class="badge badge-success">150-Pt Certified</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Dealership Customers & Verification Section -->
+        <div class="data-card">
+            <div class="data-card-header">
+                <h3>Registered Client Inquiries</h3>
+            </div>
+            <div class="table-responsive" id="customers">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Client ID</th>
+                            <th>Full Name</th>
+                            <th>Email Address</th>
+                            <th>Account Type</th>
+                            <th>Verification Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customers-tbody">
+                        <tr>
+                            <td>#CLT-501</td>
+                            <td>David Kimani</td>
+                            <td>dkimani@example.com</td>
+                            <td>Individual Buyer</td>
+                            <td><span class="badge badge-success">ID & PIN Verified</span></td>
+                        </tr>
+                        <tr>
+                            <td>#CLT-502</td>
+                            <td>Sarah Wanjiru</td>
+                            <td>swanjiru@example.com</td>
+                            <td>Corporate Account</td>
+                            <td><span class="badge badge-success">CR12 Verified</span></td>
+                        </tr>
+                        <tr>
+                            <td>#CLT-503</td>
+                            <td>Patrick Odhiambo</td>
+                            <td>podhiambo@example.com</td>
+                            <td>Individual Buyer</td>
+                            <td><span class="badge badge-pending">Pending Bank Statement</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Bliss Autos</h4>
+                <p>Premier automotive dealership offering inspected pre-owned and new vehicles in Nairobi, Kenya. Full technical certification and transparent vehicle history on all stock.</p>
+                <p>Showroom: Mombasa Road, Nairobi<br>Phone: +254 700 000 000<br>Email: sales@blissautos.co.ke</p>
+            </div>
+            <div class="footer-col">
+                <h4>Inventory & Services</h4>
+                <ul>
+                    <li><a href="Inventory.html">Vehicle Inventory</a></li>
+                    <li><a href="Dashboard.html">Financing Calculator</a></li>
+                    <li><a href="Dashboard.html">Inspection Reports</a></li>
+                    <li><a href="contact.html">Schedule a Test Drive</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Dealership</h4>
+                <ul>
+                    <li><a href="about.html">About Bliss Autos</a></li>
+                    <li><a href="contact.html">Customer Inquiries</a></li>
+                    <li><a href="login.html">Client Portal</a></li>
+                    <li><a href="Register.html">Create Account</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Compliance & Legal</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms and Conditions</a></li>
+                    <li><a href="contact.html">NTSA Transfer Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Bliss Autos Kenya Ltd. All rights reserved.</span>
+            <div>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms and Conditions</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="Bliss.js"></script>
 </body>
 </html>

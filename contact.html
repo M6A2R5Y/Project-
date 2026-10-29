@@ -1,16 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Contact</title>
-    </head>
-    <body>
-        <h1 align="center">Contact</h1>
-        <p align="center" >For any questions, please contact me at <a href="mailto:blissautos@gmail.com">Email</a></p>
-        <footer style="margin-top: 40px;">
-            <p align="center">&copy; 2024 Bliss Autos. All rights reserved.</p>
-            <p align="center" style="font-size: 12px; margin-top: 5px; opacity: 0.8;">Curated and developed by Kinyanjui</p>
-        </footer>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Bliss Autos Dealership</title>
+    <meta name="description" content="Contact Bliss Autos in Nairobi, Kenya. Inquire about vehicle inventory, schedule a test drive, or request financing consultation.">
+    <link rel="canonical" href="https://www.blissautos.co.ke/contact.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="Blisss autos.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="top-bar">
+            <span>Showroom: Mombasa Road, Nairobi, Kenya | Hours: Mon - Sat 8:00 AM - 6:00 PM</span>
+            <div>
+                <a href="tel:+254700000000">+254 700 000 000</a>
+                <a href="mailto:sales@blissautos.co.ke">sales@blissautos.co.ke</a>
+            </div>
+        </div>
+        <div class="header-container">
+            <a href="index.html" class="brand-wrapper">
+                <img src="favicon.svg" alt="Bliss Autos Logo" class="brand-logo-img">
+                <div>
+                    <div class="brand-title">Bliss Autos</div>
+                    <div class="brand-subtitle">Motor Dealership</div>
+                </div>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Inventory.html">Inventory</a></li>
+                    <li><a href="Dashboard.html">Dashboard</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                    <li><a href="login.html" class="btn-nav-primary">Client Portal</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="page-header-container">
+            <h1>Contact Bliss Autos</h1>
+            <p>Connect with our sales specialists, schedule an on-site vehicle inspection, or inquire about asset financing.</p>
+        </div>
+    </div>
+
+    <main class="container">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+            <!-- Contact Details Card -->
+            <div class="content-box" style="margin-bottom: 0;">
+                <h2>Showroom & Office</h2>
+                <p>
+                    <strong>Bliss Autos Kenya Ltd</strong><br>
+                    Mombasa Road Commercial Hub, Ground Level<br>
+                    Next to Standard Gauge Railway (SGR) Terminus Link<br>
+                    P.O. Box 48210 - 00100, Nairobi, Kenya
+                </p>
+
+                <h2>Department Inquiries</h2>
+                <ul style="list-style: none; margin: 0 0 20px 0; padding: 0;">
+                    <li style="margin-bottom: 12px;">
+                        <strong>Vehicle Sales & Reservations:</strong><br>
+                        Phone: +254 700 000 001 | Email: sales@blissautos.co.ke
+                    </li>
+                    <li style="margin-bottom: 12px;">
+                        <strong>Asset Financing & Bank Clearances:</strong><br>
+                        Phone: +254 700 000 002 | Email: finance@blissautos.co.ke
+                    </li>
+                    <li style="margin-bottom: 12px;">
+                        <strong>Logbook Transfers & NTSA Support:</strong><br>
+                        Phone: +254 700 000 003 | Email: transfers@blissautos.co.ke
+                    </li>
+                </ul>
+
+                <h2>Showroom Operating Hours</h2>
+                <p style="margin-bottom: 6px;"><strong>Monday to Friday:</strong> 8:00 AM - 6:00 PM</p>
+                <p style="margin-bottom: 6px;"><strong>Saturday:</strong> 9:00 AM - 4:00 PM</p>
+                <p><strong>Sunday & Public Holidays:</strong> By Prior Appointment Only</p>
+            </div>
+
+            <!-- Contact Inquiry Form -->
+            <div class="form-card" style="margin: 0; max-width: 100%;">
+                <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 6px; color: var(--color-primary);">Send an Official Inquiry</h3>
+                <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 20px;">Complete the form below. A dealership representative will contact you within two business hours.</p>
+
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Full Legal Name</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="e.g. Samuel Mutua" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="e.g. samuel@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inquiry-type">Inquiry Department</label>
+                        <select id="inquiry-type" class="form-control">
+                            <option value="sales">Vehicle Purchase or Availability</option>
+                            <option value="test-drive">Schedule a Test Drive</option>
+                            <option value="financing">Asset Financing Application</option>
+                            <option value="trade-in">Trade-In Vehicle Valuation</option>
+                            <option value="general">General Dealership Inquiry</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Detailed Message / Vehicle of Interest</label>
+                        <textarea id="message" name="message" class="form-control" rows="5" placeholder="Specify make, model, stock unit, or your financing inquiry..." required></textarea>
+                    </div>
+
+                    <button type="submit" id="contact-submit-btn" class="btn btn-primary btn-block">Transmit Inquiry</button>
+                    <div id="contact-feedback" style="display: none; margin-top: 14px; padding: 10px; font-size: 13px; border-radius: 4px;"></div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Bliss Autos</h4>
+                <p>Premier automotive dealership offering inspected pre-owned and new vehicles in Nairobi, Kenya. Full technical certification and transparent vehicle history on all stock.</p>
+                <p>Showroom: Mombasa Road, Nairobi<br>Phone: +254 700 000 000<br>Email: sales@blissautos.co.ke</p>
+            </div>
+            <div class="footer-col">
+                <h4>Inventory & Services</h4>
+                <ul>
+                    <li><a href="Inventory.html">Vehicle Inventory</a></li>
+                    <li><a href="Dashboard.html">Financing Calculator</a></li>
+                    <li><a href="Dashboard.html">Inspection Reports</a></li>
+                    <li><a href="contact.html">Schedule a Test Drive</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Dealership</h4>
+                <ul>
+                    <li><a href="about.html">About Bliss Autos</a></li>
+                    <li><a href="contact.html">Customer Inquiries</a></li>
+                    <li><a href="login.html">Client Portal</a></li>
+                    <li><a href="Register.html">Create Account</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Compliance & Legal</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms and Conditions</a></li>
+                    <li><a href="contact.html">NTSA Transfer Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Bliss Autos Kenya Ltd. All rights reserved.</span>
+            <div>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms and Conditions</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="Bliss.js"></script>
+</body>
 </html>

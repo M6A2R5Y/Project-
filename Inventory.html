@@ -1,129 +1,598 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Bliss Autos - Inventory</title>
-        <link rel="stylesheet" href="Blisss autos.css">
-    </head>
-    <body>      
-        <section id="inventory">
-            <h2>Our Vehicle Inventory</h2>
-            <input type="text" id="search" placeholder="Search for cars..." oninput="searchCar()">
-            <button onclick="searchCar()">Search</button>
-            <div class="car-list">
-                <div class="car-item">
-                    <img src="images/Honda Civic.jpg" alt="Honda Civic">
-                    <h3>Honda Civic</h3>
-                    <p><strong>Year:</strong> 2019</p>
-                    <p><strong>Price:</strong> Ksh 2,340,000</p>
-                    <p style="font-size: 13px; color: #555; margin-top: 5px;"><strong>Features:</strong> 1.5L Turbo, 174 HP, Apple CarPlay, Honda Sensing Suite, 36 MPG highway.</p>
-                    <div style="margin-top: 10px;">
-                        <iframe width="100%" height="150" src="https://www.youtube.com/embed/8-P1Ld_S458" title="Honda Civic walkthrough" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 4px;"></iframe>
-                    </div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certified Vehicle Inventory - Bliss Autos</title>
+    <meta name="description" content="Browse verified pre-owned and new vehicles in Nairobi, Kenya. Inspected inventory, transparent vehicle history reports, and dealer financing available.">
+    <link rel="canonical" href="https://www.blissautos.co.ke/Inventory.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="Blisss autos.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="top-bar">
+            <span>Showroom: Mombasa Road, Nairobi, Kenya | Hours: Mon - Sat 8:00 AM - 6:00 PM</span>
+            <div>
+                <a href="tel:+254700000000">+254 700 000 000</a>
+                <a href="mailto:sales@blissautos.co.ke">sales@blissautos.co.ke</a>
+            </div>
+        </div>
+        <div class="header-container">
+            <a href="index.html" class="brand-wrapper">
+                <img src="favicon.svg" alt="Bliss Autos Logo" class="brand-logo-img">
+                <div>
+                    <div class="brand-title">Bliss Autos</div>
+                    <div class="brand-subtitle">Motor Dealership</div>
                 </div>
-                <div class="car-item">
-                    <img src="images/Chevrolet Camaro.jpg" alt="Chevrolet Camaro">
-                    <h3>Chevrolet Camaro</h3>
-                    <p><strong>Year:</strong> 2020</p>
-                    <p><strong>Price:</strong> Ksh 3,640,000</p>
-                    <p style="font-size: 13px; color: #555; margin-top: 5px;"><strong>Features:</strong> 2.0L Turbocharged 4-cylinder, 275 HP, 8-speed automatic, 8-inch touch screen.</p>
-                    <div style="margin-top: 10px;">
-                        <iframe width="100%" height="150" src="https://www.youtube.com/embed/n3o_nQp15a8" title="Camaro Walkthrough" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 4px;"></iframe>
-                    </div>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Inventory.html" class="active">Inventory</a></li>
+                    <li><a href="Dashboard.html">Dashboard</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html" class="btn-nav-primary">Client Portal</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="page-header-container">
+            <h1>Showroom Vehicle Inventory</h1>
+            <p>Certified 150-point technical inspection, verified mileage logs, and transparent pricing in Kenya Shillings.</p>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Search and Multi-Attribute Filter Controls -->
+        <div class="inventory-controls">
+            <div class="search-filter-row">
+                <div>
+                    <input type="text" id="search" class="filter-input" placeholder="Search by make, model, or year..." oninput="filterCars()">
                 </div>
-                <div class="car-item">
-                    <img src="images/BMW 3 series.jpg" alt="BMW 3 series">
-                    <h3>BMW 3 Series</h3>
-                    <p><strong>Year:</strong> 2018</p>
-                    <p><strong>Price:</strong> Ksh 3,250,000</p>
-                    <p style="font-size: 13px; color: #555; margin-top: 5px;"><strong>Features:</strong> 2.0L twin-turbo Inline-4, 248 HP, Rear-Wheel Drive, Premium leather seats.</p>
-                    <div style="margin-top: 10px;">
-                        <iframe width="100%" height="150" src="https://www.youtube.com/embed/v9qL7gX5b1M" title="BMW 3 Series Review" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 4px;"></iframe>
-                    </div>
+                <div>
+                    <select id="filter-make" class="filter-select" onchange="filterCars()">
+                        <option value="">All Vehicle Makes</option>
+                        <option value="Audi">Audi</option>
+                        <option value="BMW">BMW</option>
+                        <option value="Chevrolet">Chevrolet</option>
+                        <option value="Ford">Ford</option>
+                        <option value="Honda">Honda</option>
+                        <option value="Hyundai">Hyundai</option>
+                        <option value="Kia">Kia</option>
+                        <option value="Mercedes-Benz">Mercedes-Benz</option>
+                        <option value="Nissan">Nissan</option>
+                        <option value="Subaru">Subaru</option>
+                        <option value="Toyota">Toyota</option>
+                        <option value="Volkswagen">Volkswagen</option>
+                    </select>
                 </div>
-                <div class="car-item">
-                    <img src="images/Toyota corolla.jpg" alt="Toyota corolla">
-                    <h3>Toyota Corolla</h3>
-                    <p><strong>Year:</strong> 2020</p>
-                    <p><strong>Price:</strong> Ksh 2,600,000</p>
-                    <p style="font-size: 13px; color: #555; margin-top: 5px;"><strong>Features:</strong> 1.8L 4-cylinder, Toyota Safety Sense 2.0, Bluetooth integration, 38 MPG highway.</p>
-                    <div style="margin-top: 10px;">
-                        <iframe width="100%" height="150" src="https://www.youtube.com/embed/K8w3mUew1jA" title="Toyota Corolla Review" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 4px;"></iframe>
-                    </div>
+                <div>
+                    <select id="filter-price" class="filter-select" onchange="filterCars()">
+                        <option value="">All Price Ranges</option>
+                        <option value="under3m">Under Ksh 3,000,000</option>
+                        <option value="3m-3.5m">Ksh 3.0M - Ksh 3.5M</option>
+                        <option value="over3.5m">Over Ksh 3,500,000</option>
+                    </select>
                 </div>
-                <div class="car-item">
-                    <img src="images/Audi A4.jpg" alt="Audi A4">
-                    <h3>Audi A4</h3>
-                    <p><strong>Year:</strong> 2019</p>
-                    <p><strong>Price:</strong> Ksh 3,510,000</p>
-                    <p style="font-size: 13px; color: #555; margin-top: 5px;"><strong>Features:</strong> 2.0L Turbocharged TFSI, Quattro AWD, Virtual Cockpit, Sunroof.</p>
-                    <div style="margin-top: 10px;">
-                        <iframe width="100%" height="150" src="https://www.youtube.com/embed/Y0D51jV5y6I" title="Audi A4 Walkthrough" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 4px;"></iframe>
-                    </div>
+                <div>
+                    <select id="filter-sort" class="filter-select" onchange="filterCars()">
+                        <option value="default">Sort: Recommended</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="year-desc">Year: Newest First</option>
+                    </select>
                 </div>
-                <div class="car-item">
-                    <img src="images/Mercedes-Benz C-Class.jpg" alt="Mercedes-Benz C-Class">
-                    <h3>Mercedes-Benz C-Class</h3>
-                    <p><strong>Year:</strong> 2020</p>
-                    <p><strong>Price:</strong> Ksh 4,550,000</p>
-                    <p style="font-size: 13px; color: #555; margin-top: 5px;"><strong>Features:</strong> 2.0L Inline-4 Turbo, 255 HP, 9G-TRONIC Transmission, Blind Spot Assist.</p>
-                    <div style="margin-top: 10px;">
-                        <iframe width="100%" height="150" src="https://www.youtube.com/embed/wXJmJ18uF-o" title="Mercedes Benz C Class walkthrough" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 4px;"></iframe>
-                    </div>
-                </div>
-                <div class="car-item">
-                    <img src="images/Ford Mustang.jpg" alt="Ford Mustang">
-                    <h3>Ford Mustang</h3>
-                    <p><strong>Year:</strong> 2021</p>
-                    <p><strong>Price:</strong> Ksh 3,900,000</p>
-                    <p style="font-size: 13px; color: #555; margin-top: 5px;"><strong>Features:</strong> 2.3L EcoBoost Engine, 310 HP, Selectable Drive Modes, Active Valve Performance Exhaust.</p>
-                    <div style="margin-top: 10px;">
-                        <iframe width="100%" height="150" src="https://www.youtube.com/embed/17b2p-a7P4U" title="Ford Mustang Showcase" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 4px;"></iframe>
-                    </div>
-                </div>
-                <div class="car-item">
-                    <img src="images/Hyundai Elantra.jpg" alt="Hyundai Elantra">
-                    <h3>Hyundai Elantra</h3>
-                    <p><strong>Year:</strong> 2021</p>
-                    <p><strong>Price:</strong> Ksh 2,470,000</p>
-                    <p style="font-size: 13px; color: #555;"><strong>Features:</strong> 2.0L 4-cylinder, smart infotainment screen, dynamic parking camera.</p>
-                </div>
-                <div class="car-item">
-                    <img src="images/Nissan Altima.jpg" alt="Nissan Altima">
-                    <h3>Nissan Altima</h3>
-                    <p><strong>Year:</strong> 2020</p>
-                    <p><strong>Price:</strong> Ksh 2,860,000</p>
-                    <p style="font-size: 13px; color: #555;"><strong>Features:</strong> Nissan Intelligent Mobility, cruise control, multi-zone climate control.</p>
-                </div>
-                <div class="car-item">
-                    <img src="images/Subaru Outback.jpg" alt="Subaru Outback">
-                    <h3>Subaru Outback</h3>
-                    <p><strong>Year:</strong> 2019</p>
-                    <p><strong>Price:</strong> Ksh 3,120,000</p>
-                    <p style="font-size: 13px; color: #555;"><strong>Features:</strong> Symmetrical AWD, EyeSight Driver Assist, rugged ground clearance.</p>
-                </div>
-                <div class="car-item">
-                    <img src="images/Volkswagen Passat.jpg" alt="Volkswagen Passat">
-                    <h3>Volkswagen Passat</h3>
-                    <p><strong>Year:</strong> 2020</p>
-                    <p><strong>Price:</strong> Ksh 3,380,000</p>
-                    <p style="font-size: 13px; color: #555;"><strong>Features:</strong> Premium safety rating, adaptive headlights, spacious rear legroom.</p>
-                </div>
-                <div class="car-item">
-                    <img src="images/Kia Optima.jpg" alt="Kia Optima">
-                    <h3>Kia Optima</h3>
-                    <p><strong>Year:</strong> 2021</p>
-                    <p><strong>Price:</strong> Ksh 2,730,000</p>
-                    <p style="font-size: 13px; color: #555;"><strong>Features:</strong> Elegant sporty design, steering-wheel-mounted control paddle shifters.</p>
+                <div>
+                    <button class="btn btn-primary" onclick="resetFilters()">Reset</button>
                 </div>
             </div>
-        </section>
-    
-        <footer>
-            <p>&copy; 2024 Bliss Autos. All rights reserved.</p>
-            <p style="font-size: 12px; margin-top: 5px; opacity: 0.8;">Curated and developed by Kinyanjui</p>
-        </footer>
-        <script src="Bliss.js"></script> 
-    </body>
+            <div style="font-size: 13px; color: var(--color-text-muted); margin-top: 12px;">
+                Displaying <span id="inventory-count" style="font-weight: 700; color: var(--color-primary);">18</span> verified vehicles available in our Nairobi showroom.
+            </div>
+        </div>
+
+        <!-- Vehicles Grid Container -->
+        <div class="car-list" id="inventory-grid">
+            <!-- 1. Honda Civic -->
+            <div class="car-item" data-make="Honda" data-model="Civic" data-year="2019" data-price="2340000">
+                <div class="car-image-wrapper">
+                    <img src="images/Honda Civic.jpg" alt="2019 Honda Civic" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Honda Civic</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 2,340,000</span>
+                        <span class="car-year">2019 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">1.5L Turbo (174 HP)</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">CVT Automatic</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Front-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Fuel Rating</span><span class="spec-val">36 MPG Highway</span></div>
+                    </div>
+                    <p class="car-features-desc">Equipped with Honda Sensing Suite, lane keep assist, adaptive cruise control, Apple CarPlay, and multi-angle rearview camera.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Honda+Civic" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Chevrolet Camaro -->
+            <div class="car-item" data-make="Chevrolet" data-model="Camaro" data-year="2020" data-price="3640000">
+                <div class="car-image-wrapper">
+                    <img src="images/Chevrolet Camaro.jpg" alt="2020 Chevrolet Camaro" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Chevrolet Camaro</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 3,640,000</span>
+                        <span class="car-year">2020 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.0L Turbo (275 HP)</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">8-Speed Automatic</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Rear-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Braking</span><span class="spec-val">Brembo Front Calipers</span></div>
+                    </div>
+                    <p class="car-features-desc">Sport coupe with 8-inch Chevrolet Infotainment 3 touchscreen, selectable drive modes (Tour, Sport, Snow/Ice), and sport exhaust.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Chevrolet+Camaro" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. BMW 3 Series -->
+            <div class="car-item" data-make="BMW" data-model="3 Series" data-year="2018" data-price="3250000">
+                <div class="car-image-wrapper">
+                    <img src="images/BMW 3 series.jpg" alt="2018 BMW 3 Series" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>BMW 3 Series</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 3,250,000</span>
+                        <span class="car-year">2018 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.0L TwinPower (248 HP)</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">8-Speed Steptronic</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Rear-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Interior</span><span class="spec-val">Dakota Leather Seats</span></div>
+                    </div>
+                    <p class="car-features-desc">Executive sports sedan with iDrive navigation system, LED adaptive headlights, sunroof, parking distance control, and memory seats.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=BMW+3+Series" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Toyota Corolla -->
+            <div class="car-item" data-make="Toyota" data-model="Corolla" data-year="2020" data-price="2600000">
+                <div class="car-image-wrapper">
+                    <img src="images/Toyota corolla.jpg" alt="2020 Toyota Corolla" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Toyota Corolla</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 2,600,000</span>
+                        <span class="car-year">2020 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">1.8L 4-Cylinder DOHC</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">CVTi-S Automatic</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Front-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Fuel Rating</span><span class="spec-val">38 MPG Highway</span></div>
+                    </div>
+                    <p class="car-features-desc">Toyota Safety Sense 2.0 with pre-collision pedestrian detection, lane departure alert with steering assist, and 8-inch audio multimedia.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Toyota+Corolla" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Audi A4 -->
+            <div class="car-item" data-make="Audi" data-model="A4" data-year="2019" data-price="3510000">
+                <div class="car-image-wrapper">
+                    <img src="images/Audi A4.jpg" alt="2019 Audi A4" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Audi A4</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 3,510,000</span>
+                        <span class="car-year">2019 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.0L TFSI Turbo (248 HP)</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">7-Speed S Tronic</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Quattro All-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Cockpit</span><span class="spec-val">Audi Virtual Cockpit</span></div>
+                    </div>
+                    <p class="car-features-desc">Quattro permanent all-wheel drive, full digital 12.3-inch instrument cluster, MMI navigation plus, power sunroof, and tri-zone climate control.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Audi+A4" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Mercedes-Benz C-Class -->
+            <div class="car-item" data-make="Mercedes-Benz" data-model="C-Class" data-year="2020" data-price="4550000">
+                <div class="car-image-wrapper">
+                    <img src="images/Mercedes-Benz C-Class.jpg" alt="2020 Mercedes-Benz C-Class" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Mercedes-Benz C-Class</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 4,550,000</span>
+                        <span class="car-year">2020 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.0L Inline-4 Turbo (255 HP)</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">9G-TRONIC Automatic</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Rear-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Safety</span><span class="spec-val">Active Brake Assist</span></div>
+                    </div>
+                    <p class="car-features-desc">High-specification luxury saloon with KEYLESS-GO, 10.25-inch high-resolution display, blind spot monitoring, and ambient lighting package.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Mercedes-Benz+C-Class" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Ford Mustang -->
+            <div class="car-item" data-make="Ford" data-model="Mustang" data-year="2021" data-price="3900000">
+                <div class="car-image-wrapper">
+                    <img src="images/Ford Mustang.jpg" alt="2021 Ford Mustang" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Ford Mustang</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 3,900,000</span>
+                        <span class="car-year">2021 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.3L EcoBoost (310 HP)</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">10-Speed SelectShift</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Rear-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Exhaust</span><span class="spec-val">Active Valve Exhaust</span></div>
+                    </div>
+                    <p class="car-features-desc">Performance coupe with selectable drive modes, SYNC 3 infotainment system with 8-inch touchscreen, and track apps telemetry display.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Ford+Mustang" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Hyundai Elantra -->
+            <div class="car-item" data-make="Hyundai" data-model="Elantra" data-year="2021" data-price="2470000">
+                <div class="car-image-wrapper">
+                    <img src="images/Hyundai Elantra.jpg" alt="2021 Hyundai Elantra" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Hyundai Elantra</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 2,470,000</span>
+                        <span class="car-year">2021 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.0L 4-Cylinder (147 HP)</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">Smartstream IVT</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Front-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Efficiency</span><span class="spec-val">41 MPG Highway</span></div>
+                    </div>
+                    <p class="car-features-desc">Sharp parametric exterior styling, wireless Android Auto and Apple CarPlay, forward collision avoidance assist, and dynamic backup camera.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Hyundai+Elantra" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Nissan Altima -->
+            <div class="car-item" data-make="Nissan" data-model="Altima" data-year="2020" data-price="2860000">
+                <div class="car-image-wrapper">
+                    <img src="images/Nissan Altima.jpg" alt="2020 Nissan Altima" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Nissan Altima</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 2,860,000</span>
+                        <span class="car-year">2020 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.5L Direct Injection (188 HP)</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">Xtronic CVT</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Front-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Comfort</span><span class="spec-val">Zero Gravity Seats</span></div>
+                    </div>
+                    <p class="car-features-desc">Equipped with Nissan Intelligent Mobility, ProPILOT assist, automatic emergency braking, remote engine start, and dual-zone climate controls.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Nissan+Altima" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. Subaru Outback -->
+            <div class="car-item" data-make="Subaru" data-model="Outback" data-year="2019" data-price="3120000">
+                <div class="car-image-wrapper">
+                    <img src="images/Subaru Outback.jpg" alt="2019 Subaru Outback" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Subaru Outback</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 3,120,000</span>
+                        <span class="car-year">2019 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.5L Boxer (175 HP)</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">Lineartronic CVT</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Symmetrical All-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Clearance</span><span class="spec-val">8.7 Inches Ground Clearance</span></div>
+                    </div>
+                    <p class="car-features-desc">Rugged wagon featuring Subaru EyeSight driver assist, X-MODE with hill descent control, roof rails with integrated crossbars, and power liftgate.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Subaru+Outback" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. Volkswagen Passat -->
+            <div class="car-item" data-make="Volkswagen" data-model="Passat" data-year="2020" data-price="3380000">
+                <div class="car-image-wrapper">
+                    <img src="images/Volkswagen Passat.jpg" alt="2020 Volkswagen Passat" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Volkswagen Passat</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 3,380,000</span>
+                        <span class="car-year">2020 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.0L TSI Turbo (174 HP)</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">6-Speed Tiptronic</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Front-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Interior</span><span class="spec-val">V-Tex Leatherette</span></div>
+                    </div>
+                    <p class="car-features-desc">Generous rear legroom, front collision warning with autonomous emergency braking, blind spot monitor, and power sliding glass sunroof.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Volkswagen+Passat" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12. Kia Optima -->
+            <div class="car-item" data-make="Kia" data-model="Optima" data-year="2021" data-price="2730000">
+                <div class="car-image-wrapper">
+                    <img src="images/Kia Optima.jpg" alt="2021 Kia Optima" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Kia Optima</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 2,730,000</span>
+                        <span class="car-year">2021 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.4L DOHC 4-Cylinder</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">6-Speed Automatic</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Front-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Infotainment</span><span class="spec-val">UVO 8-Inch Touchscreen</span></div>
+                    </div>
+                    <p class="car-features-desc">Sporty midsize sedan with Kia Drive Wise safety technology, lane following assist, rear cross-traffic collision avoidance, and alloy wheels.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Kia+Optima" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 13. Honda Accord -->
+            <div class="car-item" data-make="Honda" data-model="Accord" data-year="2018" data-price="2665000">
+                <div class="car-image-wrapper">
+                    <img src="images/Honda Accord.jpg" alt="2018 Honda Accord" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Honda Accord</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 2,665,000</span>
+                        <span class="car-year">2018 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">1.5L Turbo (192 HP)</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">CVT with Sport Mode</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Front-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Safety</span><span class="spec-val">Honda Sensing Suite</span></div>
+                    </div>
+                    <p class="car-features-desc">Refined executive sedan with push button start, dual-zone automatic climate control, traffic sign recognition, and multi-angle camera.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Honda+Accord" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 14. Ford Fusion -->
+            <div class="car-item" data-make="Ford" data-model="Fusion" data-year="2019" data-price="2990000">
+                <div class="car-image-wrapper">
+                    <img src="images/Ford Fusion.jpg" alt="2019 Ford Fusion" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Ford Fusion</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 2,990,000</span>
+                        <span class="car-year">2019 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">1.5L EcoBoost Turbo</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">6-Speed SelectShift</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Front-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Safety</span><span class="spec-val">Ford Co-Pilot360</span></div>
+                    </div>
+                    <p class="car-features-desc">Solid road handling with Ford Co-Pilot360, pre-collision assist with auto emergency braking, blind spot information system, and rotary gear shift dial.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Ford+Fusion" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 15. Chevrolet Malibu -->
+            <div class="car-item" data-make="Chevrolet" data-model="Malibu" data-year="2020" data-price="2925000">
+                <div class="car-image-wrapper">
+                    <img src="images/Chevrolet Malibu.jpg" alt="2020 Chevrolet Malibu" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Chevrolet Malibu</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 2,925,000</span>
+                        <span class="car-year">2020 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">1.5L Turbo DOHC</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">Continuously Variable</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Front-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Economy</span><span class="spec-val">36 MPG Highway</span></div>
+                    </div>
+                    <p class="car-features-desc">Spacious cabin with acoustic laminated windshield, 8-inch diagonal color touchscreen, Apple CarPlay, and keyless open and start.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Chevrolet+Malibu" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 16. Toyota Camry -->
+            <div class="car-item" data-make="Toyota" data-model="Camry" data-year="2021" data-price="3185000">
+                <div class="car-image-wrapper">
+                    <img src="images/Toyota Camry.jpg" alt="2021 Toyota Camry" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Toyota Camry</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 3,185,000</span>
+                        <span class="car-year">2021 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.5L Dynamic Force 4-Cyl</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">Direct Shift 8-Speed</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Front-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Safety</span><span class="spec-val">Toyota Safety Sense 2.5+</span></div>
+                    </div>
+                    <p class="car-features-desc">Benchmark reliability with TSS 2.5+, full-speed range dynamic radar cruise control, lane tracing assist, and integrated backup camera.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Toyota+Camry" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 17. Hyundai Sonata -->
+            <div class="car-item" data-make="Hyundai" data-model="Sonata" data-year="2020" data-price="3055000">
+                <div class="car-image-wrapper">
+                    <img src="images/Hyundai Sonata.jpg" alt="2020 Hyundai Sonata" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Hyundai Sonata</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 3,055,000</span>
+                        <span class="car-year">2020 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">2.5L GDI 4-Cylinder</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">8-Speed Automatic</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Front-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Technology</span><span class="spec-val">Smart Cruise Control</span></div>
+                    </div>
+                    <p class="car-features-desc">Four-door coupe silhouette with forward collision avoidance assist, lane keeping assist, driver attention warning, and LED headlights.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Hyundai+Sonata" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 18. Nissan Maxima -->
+            <div class="car-item" data-make="Nissan" data-model="Maxima" data-year="2019" data-price="3705000">
+                <div class="car-image-wrapper">
+                    <img src="images/Nissan Maxima.jpg" alt="2019 Nissan Maxima" loading="lazy">
+                    <span class="car-status-tag">Certified</span>
+                </div>
+                <div class="car-item-body">
+                    <h3>Nissan Maxima</h3>
+                    <div class="car-price-row">
+                        <span class="car-price">Ksh 3,705,000</span>
+                        <span class="car-year">2019 Model</span>
+                    </div>
+                    <div class="car-specs-grid">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">3.5L V6 (300 HP)</span></div>
+                        <div class="spec-item"><span class="spec-label">Transmission</span><span class="spec-val">Xtronic CVT Drive Mode</span></div>
+                        <div class="spec-item"><span class="spec-label">Drivetrain</span><span class="spec-val">Front-Wheel Drive</span></div>
+                        <div class="spec-item"><span class="spec-label">Audio</span><span class="spec-val">Bose Premium 11-Speaker</span></div>
+                    </div>
+                    <p class="car-features-desc">Four-door sports sedan featuring 300 horsepower V6 engine, sport-tuned suspension, Nissan Safety Shield 360, and diamond-quilted leather seats.</p>
+                    <div class="car-item-actions">
+                        <a href="contact.html?vehicle=Nissan+Maxima" class="btn btn-primary btn-sm btn-block">Inquire / Book Test Drive</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Bliss Autos</h4>
+                <p>Premier automotive dealership offering inspected pre-owned and new vehicles in Nairobi, Kenya. Full technical certification and transparent vehicle history on all stock.</p>
+                <p>Showroom: Mombasa Road, Nairobi<br>Phone: +254 700 000 000<br>Email: sales@blissautos.co.ke</p>
+            </div>
+            <div class="footer-col">
+                <h4>Inventory & Services</h4>
+                <ul>
+                    <li><a href="Inventory.html">Vehicle Inventory</a></li>
+                    <li><a href="Dashboard.html">Financing Calculator</a></li>
+                    <li><a href="Dashboard.html">Inspection Reports</a></li>
+                    <li><a href="contact.html">Schedule a Test Drive</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Dealership</h4>
+                <ul>
+                    <li><a href="about.html">About Bliss Autos</a></li>
+                    <li><a href="contact.html">Customer Inquiries</a></li>
+                    <li><a href="login.html">Client Portal</a></li>
+                    <li><a href="Register.html">Create Account</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Compliance & Legal</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms and Conditions</a></li>
+                    <li><a href="contact.html">NTSA Transfer Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Bliss Autos Kenya Ltd. All rights reserved.</span>
+            <div>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms and Conditions</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="Bliss.js"></script>
+</body>
 </html>

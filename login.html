@@ -1,61 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Bliss Autos</title>
+    <title>Client Portal Login - Bliss Autos</title>
+    <meta name="description" content="Sign in to your Bliss Autos client portal to track vehicle orders, inspect financing approvals, and manage paperwork.">
+    <link rel="canonical" href="https://www.blissautos.co.ke/login.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="Blisss autos.css">
 </head>
 <body>
-    <header>
-        <h1>Bliss Autos - Login</h1>
+    <header class="site-header">
+        <div class="top-bar">
+            <span>Showroom: Mombasa Road, Nairobi, Kenya | Hours: Mon - Sat 8:00 AM - 6:00 PM</span>
+            <div>
+                <a href="tel:+254700000000">+254 700 000 000</a>
+                <a href="mailto:sales@blissautos.co.ke">sales@blissautos.co.ke</a>
+            </div>
+        </div>
+        <div class="header-container">
+            <a href="index.html" class="brand-wrapper">
+                <img src="favicon.svg" alt="Bliss Autos Logo" class="brand-logo-img">
+                <div>
+                    <div class="brand-title">Bliss Autos</div>
+                    <div class="brand-subtitle">Motor Dealership</div>
+                </div>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="Inventory.html">Inventory</a></li>
+                    <li><a href="Dashboard.html">Dashboard</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="Register.html" class="btn-nav-primary">Register</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    <style>
-        body {
-            background-image: url('carB.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            font-family: 'Times New Roman', Times, serif;
-            margin: 0;
-            padding: 0;
-            color: #000;            
-        }
-       
-        h1 {
-            color: #000;
-            text-align: center;
-        }
-        section {
-                padding: 2em;
-                text-align: center;
-                font-size: larger;
-                font-weight:bolder;
-        }
-        p {
-            font-size: larger;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px auto;
-        }
-    </style>
-    <section id="login">
-        <h2>Login</h2>
-        <form id="login-form">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Login</button>
-        </form>
-    </section>
 
-    <footer>
-        <p>&copy; 2024 Bliss Autos. All rights reserved.</p>
-        <p style="font-size: 12px; margin-top: 5px; opacity: 0.8;">Curated and developed by Kinyanjui</p>
+    <div class="page-header">
+        <div class="page-header-container">
+            <h1>Client Portal Login</h1>
+            <p>Access your vehicle reservations, financing applications, and NTSA TIMS transfer tracking.</p>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="form-card">
+            <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--color-primary);">Sign In to Your Account</h2>
+            <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 24px;">Enter your registered credentials to access your dashboard.</p>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Registered Email Address</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" required autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required autocomplete="current-password">
+                </div>
+
+                <div id="login-feedback" style="display: none; margin-bottom: 16px; padding: 10px 14px; font-size: 13px; border-radius: 4px;"></div>
+
+                <button type="submit" id="login-btn" class="btn btn-primary btn-block">Sign In</button>
+
+                <p style="text-align: center; font-size: 13px; color: var(--color-text-muted); margin-top: 20px;">
+                    Do not have a client profile yet? <a href="Register.html" style="color: var(--color-accent); font-weight: 600; text-decoration: none;">Create an account</a>
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Bliss Autos</h4>
+                <p>Premier automotive dealership offering inspected pre-owned and new vehicles in Nairobi, Kenya. Full technical certification and transparent vehicle history on all stock.</p>
+                <p>Showroom: Mombasa Road, Nairobi<br>Phone: +254 700 000 000<br>Email: sales@blissautos.co.ke</p>
+            </div>
+            <div class="footer-col">
+                <h4>Inventory & Services</h4>
+                <ul>
+                    <li><a href="Inventory.html">Vehicle Inventory</a></li>
+                    <li><a href="Dashboard.html">Financing Calculator</a></li>
+                    <li><a href="Dashboard.html">Inspection Reports</a></li>
+                    <li><a href="contact.html">Schedule a Test Drive</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Dealership</h4>
+                <ul>
+                    <li><a href="about.html">About Bliss Autos</a></li>
+                    <li><a href="contact.html">Customer Inquiries</a></li>
+                    <li><a href="login.html">Client Portal</a></li>
+                    <li><a href="Register.html">Create Account</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Compliance & Legal</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms and Conditions</a></li>
+                    <li><a href="contact.html">NTSA Transfer Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Bliss Autos Kenya Ltd. All rights reserved.</span>
+            <div>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms and Conditions</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
     </footer>
 
     <script src="login.js"></script>

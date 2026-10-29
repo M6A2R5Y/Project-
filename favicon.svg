@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="8" fill="#0f172a"/>
+  <!-- Sleek automotive roofline contour -->
+  <path d="M12 40 L20 25 L34 22 L45 25 L52 40 Z" fill="none" stroke="#e2e8f0" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Front and rear wheel arches -->
+  <path d="M8 40 L16 40 A6 6 0 0 1 28 40 L36 40 A6 6 0 0 1 48 40 L56 40" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Front & rear wheels -->
+  <circle cx="22" cy="40" r="3.5" fill="#e2e8f0"/>
+  <circle cx="42" cy="40" r="3.5" fill="#e2e8f0"/>
+  <!-- Stylized monogram BA inside upper frame -->
+  <text x="32" y="18" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="11" font-weight="800" text-anchor="middle" letter-spacing="1">BLISS</text>
+</svg>
