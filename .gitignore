@@ -1,0 +1,9 @@
+node_modules/
+Bliss autos backend/node_modules/
+.tmp/
+.env
+.env.local
+.vercel/
+credentials.json
+token.json
+npm-debug.log*

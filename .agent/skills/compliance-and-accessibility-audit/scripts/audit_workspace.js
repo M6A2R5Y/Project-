@@ -49,13 +49,25 @@ const requiredFiles = [
     'refund.html',
     'cookies.html',
     'data-deletion.html',
-    'Bliss autos backend/backend.js'
+    'Bliss autos backend/backend.js',
+    '.gitignore',
+    'vercel.json',
+    'api/index.js',
+    'package.json'
 ];
 
 requiredFiles.forEach(relPath => {
     const fullPath = path.join(ROOT, relPath);
     assertCheck(fs.existsSync(fullPath), `Missing required file: ${relPath}`);
 });
+
+// Verify package.json & deployment configuration (Self-Annealed Vercel Build Check)
+const pkgPath = path.join(ROOT, 'package.json');
+if (fs.existsSync(pkgPath)) {
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+    assertCheck(pkg.name === 'bliss-autos', `package.json: Invalid package name "${pkg.name}" (must be lowercase URL-safe "bliss-autos")`);
+    assertCheck(pkg.scripts && pkg.scripts.build && !pkg.scripts.build.includes('webpack'), 'package.json: Build script must not invoke non-executable webpack binary');
+}
 
 // 2. Audit HTML files
 const htmlFiles = [

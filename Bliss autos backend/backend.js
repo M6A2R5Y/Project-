@@ -93,50 +93,62 @@ const inMemoryStore = {
     ]
 };
 
-// Resilient MySQL Connection
+// Resilient MySQL Connection (Serverless & Local Compatible)
 let dbConnected = false;
-const db = mysql.createConnection({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'bliss_autos'
-});
+let db = null;
 
-db.connect(err => {
-    if (err) {
-        console.warn('MySQL connection notice:', err.message);
-        console.log('Operating with resilient in-memory dealership data store.');
-    } else {
-        dbConnected = true;
-        console.log('Connected to MySQL database!');
+if (!process.env.VERCEL || process.env.DB_HOST) {
+    db = mysql.createConnection({
+        host: process.env.DB_HOST || 'localhost',
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '',
+        database: process.env.DB_NAME || 'bliss_autos',
+        connectTimeout: 3000
+    });
 
-        const createInquiriesTable = `
-        CREATE TABLE IF NOT EXISTS inquiries (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            email VARCHAR(255) NOT NULL,
-            message TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        );`;
+    db.on('error', (err) => {
+        dbConnected = false;
+        console.warn('MySQL connection error handled gracefully:', err.message);
+    });
 
-        const createChatSessionsTable = `
-        CREATE TABLE IF NOT EXISTS chat_sessions (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            email VARCHAR(255) NOT NULL,
-            chat_history JSON,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        );`;
+    db.connect(err => {
+        if (err) {
+            console.warn('MySQL connection notice:', err.message);
+            console.log('Operating with resilient in-memory dealership data store.');
+        } else {
+            dbConnected = true;
+            console.log('Connected to MySQL database!');
 
-        db.query(createInquiriesTable, (err) => {
-            if (err) console.error('Error creating inquiries table:', err);
-        });
+            const createInquiriesTable = `
+            CREATE TABLE IF NOT EXISTS inquiries (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                message TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );`;
 
-        db.query(createChatSessionsTable, (err) => {
-            if (err) console.error('Error creating chat_sessions table:', err);
-        });
-    }
-});
+            const createChatSessionsTable = `
+            CREATE TABLE IF NOT EXISTS chat_sessions (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                chat_history JSON,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );`;
+
+            db.query(createInquiriesTable, (err) => {
+                if (err) console.error('Error creating inquiries table:', err);
+            });
+
+            db.query(createChatSessionsTable, (err) => {
+                if (err) console.error('Error creating chat_sessions table:', err);
+            });
+        }
+    });
+} else {
+    console.log('Serverless environment detected: operating with built-in dealership data store.');
+}
 
 // Serve static assets from project root
 const staticPath = path.join(__dirname, '..');
@@ -448,9 +460,13 @@ app.get('/Bliss%20autos.html', (req, res) => {
     res.sendFile(path.join(staticPath, 'index.html'));
 });
 
-// Start Server
+// Start Server (Local / Standalone Mode)
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Bliss Autos server active on port ${PORT}`);
-    console.log(`Custom Domain configured: ${CUSTOM_DOMAIN}`);
-});
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Bliss Autos server active on port ${PORT}`);
+        console.log(`Custom Domain configured: ${CUSTOM_DOMAIN}`);
+    });
+}
+
+module.exports = app;

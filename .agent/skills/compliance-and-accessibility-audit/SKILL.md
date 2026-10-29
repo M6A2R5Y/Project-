@@ -45,6 +45,7 @@ Ensure every HTML, CSS, JavaScript, and backend file in the Bliss Autos workspac
 - **Missing `alt` text on images:** Script identifies exact file and `<img>` tag lacking non-empty `alt` text. Fix by adding descriptive automotive alt text.
 - **Pre-checked consent input:** Script detects `checked` attribute on consent checkboxes. Fix by removing default `checked` state.
 - **Missing skip link or `#main-content`:** Script flags the HTML file. Fix by inserting `.skip-link` after `<body>` and `id="main-content"` on the main container.
+- **Vercel Build Failure (`sh: 1: webpack: Permission denied` or missing output directory):** Occurs if Windows `node_modules/.bin/webpack` is committed to Git with mode `100644` or if `package.json` invokes `webpack` without outputting static assets. Fix by untracking `node_modules` via `.gitignore`, setting `"build"` in `package.json` to run `node .agent/skills/compliance-and-accessibility-audit/scripts/audit_workspace.js`, and configuring `vercel.json` with `"outputDirectory": "."` and `/api/(.*)` routing to `api/index.js`.
 
 ## 7. Definition of Done
 - [ ] All 11 HTML pages exist and link to `privacy.html`, `terms.html`, `refund.html`, `cookies.html`, and `data-deletion.html`.
