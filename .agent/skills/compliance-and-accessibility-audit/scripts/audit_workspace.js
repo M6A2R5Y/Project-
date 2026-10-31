@@ -163,13 +163,68 @@ if (fs.existsSync(cssPath)) {
     assertCheck(!/[^\x00-\x7F]/.test(css), 'Blisss autos.css: Contains non-ASCII characters');
 }
 
-// 5. Backend API Checks (Data Deletion & Unsubscribe endpoints)
+// 5. Backend API & Authentication Checks
 const backendPath = path.join(ROOT, 'Bliss autos backend/backend.js');
 if (fs.existsSync(backendPath)) {
     const backend = fs.readFileSync(backendPath, 'utf8');
     assertCheck(backend.includes('/api/data-deletion'), 'backend.js: Missing /api/data-deletion endpoint');
     assertCheck(backend.includes('/api/unsubscribe'), 'backend.js: Missing /api/unsubscribe endpoint');
     assertCheck(backend.includes('List-Unsubscribe'), 'backend.js: Missing List-Unsubscribe email header support');
+    assertCheck(backend.includes('authenticateToken'), 'backend.js: Missing authenticateToken middleware');
+    assertCheck(backend.includes("app.get('/api/dashboard-data', authenticateToken"), 'backend.js: /api/dashboard-data must be protected with authenticateToken');
+    assertCheck(backend.includes("app.get('/api/order', authenticateToken"), 'backend.js: /api/order must be protected with authenticateToken');
+    assertCheck(backend.includes("app.get('/api/customer', authenticateToken"), 'backend.js: /api/customer must be protected with authenticateToken');
+}
+
+// 6. Dealership Dashboard Access & Privacy Isolation Checks
+const dashboardPath = path.join(ROOT, 'Dashboard.html');
+if (fs.existsSync(dashboardPath)) {
+    const dashContent = fs.readFileSync(dashboardPath, 'utf8');
+    assertCheck(dashContent.includes('localStorage.getItem(\'authToken\')'), 'Dashboard.html: Missing client-side authentication token guard in head');
+    assertCheck(dashContent.includes('name="robots" content="noindex, nofollow"'), 'Dashboard.html: Missing noindex, nofollow robots tag');
+    assertCheck(!dashContent.includes('dkimani@example.com') && !dashContent.includes('swanjiru@example.com'), 'Dashboard.html: Contains hardcoded customer personal data (must be dynamically loaded via auth)');
+    assertCheck(dashContent.includes('id="dashboard-protected-content"'), 'Dashboard.html: Missing #dashboard-protected-content container');
+    assertCheck(dashContent.includes('id="dashboard-auth-gate"'), 'Dashboard.html: Missing #dashboard-auth-gate fallback');
+}
+
+// Verify Dashboard is not linked in public navigations
+const publicPages = [
+    'index.html',
+    'Bliss autos.html',
+    'Inventory.html',
+    'about.html',
+    'contact.html',
+    'login.html',
+    'Register.html',
+    'privacy.html',
+    'terms.html',
+    'refund.html',
+    'cookies.html',
+    'data-deletion.html'
+];
+
+publicPages.forEach(pubPage => {
+    const pubPath = path.join(ROOT, pubPage);
+    if (!fs.existsSync(pubPath)) return;
+    const pubContent = fs.readFileSync(pubPath, 'utf8');
+    const navMatch = pubContent.match(/<nav class="main-nav"[^>]*>([\s\S]*?)<\/nav>/i);
+    if (navMatch) {
+        assertCheck(!navMatch[1].includes('Dashboard.html'), `${pubPage}: Public main navigation must NOT link to Dashboard.html`);
+    }
+});
+
+// Verify SEO & Crawl Protection
+const robotsPath = path.join(ROOT, 'robots.txt');
+if (fs.existsSync(robotsPath)) {
+    const robots = fs.readFileSync(robotsPath, 'utf8');
+    assertCheck(robots.includes('Disallow: /Dashboard.html'), 'robots.txt: Must disallow /Dashboard.html');
+    assertCheck(robots.includes('Disallow: /api/'), 'robots.txt: Must disallow /api/');
+}
+
+const sitemapPath = path.join(ROOT, 'sitemap.xml');
+if (fs.existsSync(sitemapPath)) {
+    const sitemap = fs.readFileSync(sitemapPath, 'utf8');
+    assertCheck(!sitemap.includes('Dashboard.html'), 'sitemap.xml: Must NOT index Dashboard.html');
 }
 
 if (errors.length > 0) {

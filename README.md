@@ -48,6 +48,7 @@ Every regulatory, ethical design, and accessibility requirement is implemented a
 | **Unsubscribe Link in Emails** | Optional marketing checkbox is strictly opt-in (un-checked). Every email includes an RFC 8058 `List-Unsubscribe` header and a direct one-click unsubscribe link routed to [`data-deletion.html`](data-deletion.html) and `POST /api/unsubscribe`. |
 | **Licence Fonts or Images** | Code licensed under MIT ([`LICENSE`](LICENSE)). Uses 100% royalty-free native OS system fonts (`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif`) and first-party dealership vehicle photography in `images/`. |
 | **Data Deletion Requests** | Self-service portal at [`data-deletion.html`](data-deletion.html) backed by `POST /api/data-deletion` in [`Bliss autos backend/backend.js`](Bliss%20autos%20backend/backend.js) to permanently erase accounts, inquiries, and chat logs. |
+| **Dashboard Authentication & Access Isolation** | [`Dashboard.html`](Dashboard.html) is protected by synchronous client-side authentication guards, server-side JWT verification middleware on `/api/dashboard-data`, `/api/order`, and `/api/customer`, zero static PII, excluded from `sitemap.xml`, disallowed in `robots.txt`, and removed from all public navigations. |
 
 ---
 
@@ -86,16 +87,18 @@ node ".agent/skills/compliance-and-accessibility-audit/scripts/audit_workspace.j
 
 ## 4. API Endpoints Reference
 
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/car` | Returns all 18 certified showroom vehicles. |
-| `GET` | `/api/dashboard-data` | Returns inventory counts, make diversity, and active order summaries. |
-| `GET` | `/api/order` | Returns vehicle reservation and order records. |
-| `GET` | `/api/financing` | Returns available commercial bank and corporate fleet financing plans. |
-| `GET` | `/api/customer` | Returns sanitized customer records (passwords never exposed). |
-| `POST` | `/api/register` | Creates a client account (verifies 18+ age consent and hashes password with `bcrypt`). |
-| `POST` | `/api/login` | Authenticates client credentials and returns an 8-hour signed JWT. |
-| `POST` | `/api/contact` | Records a customer inquiry and attaches RFC 8058 `List-Unsubscribe` headers. |
-| `POST` | `/api/chat` | Processes Showroom Support Desk inquiries. |
-| `POST` | `/api/data-deletion` | Permanently purges customer account, inquiries, and chat logs from memory and MySQL. |
+| Method | Endpoint | Access Level | Description |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/car` | Public | Returns all 18 certified showroom vehicles with duty and VAT paid pricing. |
+| `GET` | `/api/financing` | Public | Returns available commercial bank asset finance packages and tenure options. |
+| `POST` | `/api/register` | Public | Creates a client account (verifies 18+ age consent and hashes password with `bcrypt`). |
+| `POST` | `/api/login` | Public | Authenticates credentials and returns an 8-hour signed JWT session token. |
+| `POST` | `/api/contact` | Public | Records customer inquiry and attaches RFC 8058 `List-Unsubscribe` headers. |
+| `POST` | `/api/chat` | Public | Processes Showroom Support Desk inquiries and test drive requests. |
+| `POST` | `/api/data-deletion` | Public | Permanently purges customer account, inquiries, and chat logs (Right to Erasure). |
+| `POST` | `/api/unsubscribe` | Public | One-click unsubscribe endpoint updating database records and local storage. |
+| `GET` | `/api/auth/verify` | **Protected (JWT)** | Validates active session token and returns authenticated user identity. |
+| `GET` | `/api/dashboard-data` | **Protected (JWT)** | Returns operations metrics and active reservation totals. |
+| `GET` | `/api/order` | **Protected (JWT)** | Returns vehicle reservation and customer order records. |
+| `GET` | `/api/customer` | **Protected (JWT)** | Returns sanitized registered client records (passwords never exposed). |
 | `POST` | `/api/unsubscribe` | Immediately unsubscribes an email address from all marketing communications. |

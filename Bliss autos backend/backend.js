@@ -22,6 +22,24 @@ const JWT_SECRET = process.env.JWT_SECRET || 'bliss_autos_production_key_2026';
 app.use(bodyParser.json());
 app.use(express.json());
 
+// Authentication Middleware for Protected Dealership & Client Portal Endpoints
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1]; // Bearer <token>
+
+    if (!token) {
+        return res.status(401).json({ error: 'Unauthorized: Authentication token required to access this portal.' });
+    }
+
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+        if (err) {
+            return res.status(403).json({ error: 'Forbidden: Invalid or expired session token.' });
+        }
+        req.user = user;
+        next();
+    });
+}
+
 // CORS and Security Headers
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -172,8 +190,8 @@ app.get('/api/car', (req, res) => {
     }
 });
 
-// 2. Dashboard Metrics
-app.get('/api/dashboard-data', (req, res) => {
+// 2. Protected Dashboard Metrics (Authenticated Staff & Clients Only)
+app.get('/api/dashboard-data', authenticateToken, (req, res) => {
     const totalVehicles = fallbackCars.length;
     const uniqueMakes = new Set(fallbackCars.map(c => c.make)).size;
     res.json({
@@ -181,12 +199,13 @@ app.get('/api/dashboard-data', (req, res) => {
         carmake: uniqueMakes,
         totalCars: totalVehicles,
         activeOrders: inMemoryStore.orders.length,
-        financingPlans: inMemoryStore.financingPlans.length
+        financingPlans: inMemoryStore.financingPlans.length,
+        authenticatedUser: req.user.email
     });
 });
 
-// 3. Orders and Reservations
-app.get('/api/order', (req, res) => {
+// 3. Protected Orders and Reservations (Authenticated Access Only)
+app.get('/api/order', authenticateToken, (req, res) => {
     if (dbConnected) {
         const sql = `
         SELECT o.order_id, o.order_date, o.order_status as status, c.name as customer_name, CONCAT(car.year, ' ', car.make, ' ', car.model) as car
@@ -204,7 +223,7 @@ app.get('/api/order', (req, res) => {
     }
 });
 
-// 4. Financing Packages
+// 4. Financing Packages (Public Reference)
 app.get('/api/financing', (req, res) => {
     if (dbConnected) {
         db.query('SELECT * FROM financing', (err, results) => {
@@ -218,8 +237,8 @@ app.get('/api/financing', (req, res) => {
     }
 });
 
-// 5. Customers List (Sanitized - No Passwords Exposed)
-app.get('/api/customer', (req, res) => {
+// 5. Protected Customer List (Authenticated Access Only - No Passwords Exposed)
+app.get('/api/customer', authenticateToken, (req, res) => {
     if (dbConnected) {
         db.query('SELECT id, name, email FROM customer', (err, results) => {
             if (err || !results || results.length === 0) {
@@ -230,6 +249,17 @@ app.get('/api/customer', (req, res) => {
     } else {
         res.json(inMemoryStore.customers.map(c => ({ id: c.id, name: c.name, email: c.email })));
     }
+});
+
+// 5b. Session Verification Endpoint
+app.get('/api/auth/verify', authenticateToken, (req, res) => {
+    res.json({
+        valid: true,
+        user: {
+            id: req.user.userId,
+            email: req.user.email
+        }
+    });
 });
 
 // 6. Customer Registration (Enforces 18+ Age Consent & Data Minimization)
@@ -352,7 +382,7 @@ app.post('/api/chat', async (req, res) => {
     if (msgLower.includes('price') || msgLower.includes('cost') || msgLower.includes('how much') || msgLower.includes('budget') || msgLower.includes('fee')) {
         responseText = `Hello ${name}. Our certified vehicle fleet ranges from Ksh 2,340,000 (Honda Civic) to Ksh 4,550,000 (Mercedes-Benz C-Class). Every listed price includes KRA import duty and VAT with zero hidden dealer fees (statutory NTSA TIMS transfer is Ksh 3,500).`;
     } else if (msgLower.includes('finance') || msgLower.includes('loan') || msgLower.includes('installment') || msgLower.includes('bank')) {
-        responseText = `Hi ${name}. We partner with accredited commercial banks in Kenya to offer up to 80% asset financing with loan durations from 12 to 60 months. You can use our financing calculator on the Dashboard to model your monthly installments.`;
+        responseText = `Hi ${name}. We partner with accredited commercial banks in Kenya to offer up to 80% asset financing with loan durations from 12 to 60 months. You can use our financing calculator on our Inventory page to model your monthly installments.`;
     } else if (msgLower.includes('refund') || msgLower.includes('cancel') || msgLower.includes('deposit')) {
         responseText = `All vehicle holding deposits are 100% refundable within 3 business days if you cancel prior to final contract execution or if an inspection reveals any undisclosed defect. Full details are on our Refund Policy page.`;
     } else if (msgLower.includes('hour') || msgLower.includes('open') || msgLower.includes('time') || msgLower.includes('visit') || msgLower.includes('location')) {

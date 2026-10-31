@@ -32,10 +32,9 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="Inventory.html" class="active" aria-current="page">Inventory</a></li>
-                    <li><a href="Dashboard.html">Dashboard</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="contact.html">Contact</a></li>
-                    <li><a href="login.html" class="btn-nav-primary">Client Portal</a></li>
+                    <li><a href="login.html" class="btn-nav-primary" id="nav-portal-link">Client Portal</a></li>
                 </ul>
             </nav>
         </div>
@@ -558,6 +557,63 @@
                 </div>
             </div>
         </div>
+
+        <!-- Asset Financing & Monthly Repayment Calculator (Public Tool) -->
+        <section id="financing-calculator" class="data-card" style="margin-top: 48px;">
+            <div class="data-card-header">
+                <h2>Asset Financing &amp; Monthly Payment Calculator</h2>
+                <span style="font-size: 13px; color: var(--color-text-muted);">Commercial Bank Asset Finance Partner Estimates</span>
+            </div>
+            <p style="color: var(--color-text-muted); font-size: 14px; margin-bottom: 24px;">
+                Model your estimated monthly repayments on any certified showroom vehicle. We partner with regulated commercial banks in Kenya to offer up to 80% vehicle financing over 12 to 60 month tenures at indicative 13.5% APR. Zero hidden processing markups.
+            </p>
+            <div class="calc-grid">
+                <div>
+                    <div class="form-group">
+                        <label for="calc-vehicle-price">Vehicle Price (Ksh - Duty &amp; VAT Paid)</label>
+                        <input type="number" id="calc-vehicle-price" class="form-control" value="2600000" step="50000">
+                    </div>
+                    <div class="form-group">
+                        <label for="calc-deposit-pct">Down Payment (%)</label>
+                        <select id="calc-deposit-pct" class="form-control">
+                            <option value="10">10% Deposit (Ksh 260,000)</option>
+                            <option value="20" selected>20% Deposit (Ksh 520,000)</option>
+                            <option value="30">30% Deposit (Ksh 780,000)</option>
+                            <option value="40">40% Deposit (Ksh 1,040,000)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="calc-term">Repayment Duration</label>
+                        <select id="calc-term" class="form-control">
+                            <option value="12">12 Months (1 Year)</option>
+                            <option value="24">24 Months (2 Years)</option>
+                            <option value="36">36 Months (3 Years)</option>
+                            <option value="48" selected>48 Months (4 Years)</option>
+                            <option value="60">60 Months (5 Years)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="calc-interest-rate">Annual Interest Rate (%)</label>
+                        <input type="number" id="calc-interest-rate" class="form-control" value="13.5" step="0.5">
+                    </div>
+                </div>
+
+                <div class="calc-results-box" role="region" aria-live="polite" aria-label="Financing Calculation Result">
+                    <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-light);">Estimated Monthly Repayment</span>
+                    <div class="calc-monthly-amount" id="calc-monthly-display">Ksh 56,230</div>
+                    <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 6px;">
+                        Principal Financed: <strong id="calc-financed-display">Ksh 2,080,000</strong>
+                    </p>
+                    <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 6px;">
+                        Required Deposit: <strong id="calc-deposit-display">Ksh 520,000</strong>
+                    </p>
+                    <p style="font-size: 12px; color: var(--color-text-light); margin-bottom: 16px;">
+                        Statutory NTSA Transfer Fee: <strong>Ksh 3,500</strong> (Zero hidden dealer fees)
+                    </p>
+                    <a href="contact.html" class="btn btn-primary btn-sm">Inquire for Pre-Approval</a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Non-Deceptive Cookie Consent Banner -->
@@ -589,8 +645,8 @@
                 <h4>Inventory &amp; Services</h4>
                 <ul>
                     <li><a href="Inventory.html">Vehicle Inventory</a></li>
-                    <li><a href="Dashboard.html">Financing Calculator</a></li>
-                    <li><a href="Dashboard.html">Inspection Reports</a></li>
+                    <li><a href="Inventory.html#financing-calculator">Financing Calculator</a></li>
+                    <li><a href="about.html#inspection-standards">Inspection Reports</a></li>
                     <li><a href="contact.html">Schedule a Test Drive</a></li>
                 </ul>
             </div>

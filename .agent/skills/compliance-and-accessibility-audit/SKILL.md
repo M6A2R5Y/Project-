@@ -22,8 +22,14 @@ Ensure every HTML, CSS, JavaScript, and backend file in the Bliss Autos workspac
    - Cookie consent banner (`#cookie-consent-banner`) with equal-weight non-deceptive action buttons
    - Full registered corporate business details in the footer
    - Descriptive `alt` attributes on all `<img>` elements
-3. Verify all data intake forms (`contact-form`, `register-form`, `chat-leads-form`, `deletion-form`) contain explicit, un-checked-by-default consent checkboxes for 18+ age verification and Privacy/Terms acceptance.
-4. Run the deterministic audit script `node .agent/skills/compliance-and-accessibility-audit/scripts/audit_workspace.js` to validate 100% pass rate across all checks.
+3. Ensure Dealership Operations Dashboard (`Dashboard.html`) is protected:
+   - Synchronous head script checking `localStorage.getItem('authToken')` with redirect to `login.html?redirect=Dashboard.html&reason=auth_required`
+   - Zero hardcoded customer personal data (PII) in static HTML tables
+   - Excluded from `sitemap.xml` and disallowed in `robots.txt`
+   - Not linked from public page navigation bars (accessible only via authenticated Client Portal)
+   - Backend APIs (`/api/dashboard-data`, `/api/order`, `/api/customer`) guarded by `authenticateToken` JWT middleware
+4. Verify all data intake forms (`contact-form`, `register-form`, `chat-leads-form`, `deletion-form`) contain explicit, un-checked-by-default consent checkboxes for 18+ age verification and Privacy/Terms acceptance.
+5. Run the deterministic audit script `node .agent/skills/compliance-and-accessibility-audit/scripts/audit_workspace.js` to validate 100% pass rate across all checks.
 
 ## 3. Examples
 - **Input:** Request to audit workspace compliance and accessibility.
@@ -46,9 +52,11 @@ Ensure every HTML, CSS, JavaScript, and backend file in the Bliss Autos workspac
 - **Pre-checked consent input:** Script detects `checked` attribute on consent checkboxes. Fix by removing default `checked` state.
 - **Missing skip link or `#main-content`:** Script flags the HTML file. Fix by inserting `.skip-link` after `<body>` and `id="main-content"` on the main container.
 - **Vercel Build Failure (`sh: 1: webpack: Permission denied` or missing output directory):** Occurs if Windows `node_modules/.bin/webpack` is committed to Git with mode `100644` or if `package.json` invokes `webpack` without outputting static assets. Fix by untracking `node_modules` via `.gitignore`, setting `"build"` in `package.json` to run `node .agent/skills/compliance-and-accessibility-audit/scripts/audit_workspace.js`, and configuring `vercel.json` with `"outputDirectory": "."` and `/api/(.*)` routing to `api/index.js`.
+- **Public Dashboard Exposure:** Occurs when `Dashboard.html` is directly accessible without authentication, included in public navigation bars, or indexed by search engine crawlers. Fix by enforcing immediate `<head>` token redirection, server-side JWT verification on operational APIs, purging mock customer data from static HTML, disallowing in `robots.txt`, and omitting from `sitemap.xml`.
 
 ## 7. Definition of Done
-- [ ] All 11 HTML pages exist and link to `privacy.html`, `terms.html`, `refund.html`, `cookies.html`, and `data-deletion.html`.
+- [ ] All 13 HTML pages exist and link to `privacy.html`, `terms.html`, `refund.html`, `cookies.html`, and `data-deletion.html`.
 - [ ] Cookie consent banner is present and non-deceptive on all pages.
 - [ ] All forms verify 18+ age and Privacy/Terms consent without pre-ticked checkboxes.
+- [ ] Dealership dashboard is secured against unauthenticated access and public crawlers.
 - [ ] Deterministic script `audit_workspace.js` exits with code `0`.

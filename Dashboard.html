@@ -5,9 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dealership Management &amp; Client Dashboard - Bliss Autos</title>
     <meta name="description" content="Dealership management portal, inventory status, active vehicle reservations, and transparent asset financing calculator.">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="canonical" href="https://www.blissautos.co.ke/Dashboard.html">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="Blisss autos.css">
+    <!-- Immediate Authentication Guard: Redirect unauthenticated requests before render -->
+    <script>
+        (function() {
+            var token = localStorage.getItem('authToken');
+            if (!token) {
+                window.location.replace('login.html?redirect=Dashboard.html&reason=auth_required');
+            }
+        })();
+    </script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -32,10 +42,10 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="Inventory.html">Inventory</a></li>
-                    <li><a href="Dashboard.html" class="active" aria-current="page">Dashboard</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="contact.html">Contact</a></li>
-                    <li><a href="login.html" class="btn-nav-primary">Client Portal</a></li>
+                    <li><a href="Dashboard.html" class="active" aria-current="page">Dashboard</a></li>
+                    <li><button type="button" onclick="signOutUser(false)" class="btn-nav-primary" style="background: none; border: 1px solid var(--color-border); color: var(--color-text); cursor: pointer;">Sign Out</button></li>
                 </ul>
             </nav>
         </div>
@@ -44,254 +54,231 @@
     <div class="page-header">
         <div class="page-header-container">
             <h1>Dealership Operations &amp; Client Portal</h1>
-            <p>Real-time vehicle inventory status, reservation tracking, and transparent asset finance modeling.</p>
+            <p>Restricted portal: vehicle reservations, verified inventory status, and asset finance modeling.</p>
         </div>
     </div>
 
     <main id="main-content" class="container">
-        <!-- Transparent Pricing Notice -->
-        <div class="fee-breakdown-banner">
-            <strong>Complete Fee Transparency (Zero Hidden Charges):</strong> All listed vehicle prices include KRA Import Duty, Excise Duty, 16% VAT, and our 150-Point Mechanical Inspection Certificate. The only statutory pass-through fee is the official NTSA TIMS Logbook Transfer fee of <strong>Ksh 3,500</strong>. All holding deposits are 100% refundable under our <a href="refund.html" style="color: var(--color-accent); font-weight: 600;">Refund Policy</a>.
+        <!-- Unauthenticated Fallback Gate (Displayed if JavaScript is modified or token is missing) -->
+        <div id="dashboard-auth-gate" style="display: none; padding: 48px 24px; text-align: center; background: #ffffff; border: 1px solid var(--color-border); border-radius: 4px; margin-top: 24px;">
+            <h2 style="margin-bottom: 12px; color: var(--color-primary);">Restricted Dealership Portal</h2>
+            <p style="color: var(--color-text-muted); max-width: 540px; margin: 0 auto 20px; line-height: 1.6;">
+                Access to operational vehicle orders, customer inquiries, and fleet records is restricted to authenticated dealership staff and registered clients.
+            </p>
+            <a href="login.html?redirect=Dashboard.html&reason=auth_required" class="btn btn-primary">Sign In to Continue</a>
         </div>
 
-        <!-- Key Operational Metrics -->
-        <div class="dashboard-grid">
-            <div class="metric-card">
-                <div class="metric-label">Showroom Inventory</div>
-                <div class="metric-value" id="stat-total-cars">18</div>
-                <div class="metric-note">Inspected and certified units</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Vehicle Makes Represented</div>
-                <div class="metric-value" id="stat-total-makes">12</div>
-                <div class="metric-note">Sedans, wagons, coupes, executive</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Standard TIMS Transfer</div>
-                <div class="metric-value">48 Hours</div>
-                <div class="metric-note">Statutory fee: Ksh 3,500 flat</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-label">Holding Deposit Protection</div>
-                <div class="metric-value">100% Refundable</div>
-                <div class="metric-note">3-business-day EFT refund</div>
-            </div>
-        </div>
-
-        <!-- Asset Financing Calculator -->
-        <div class="data-card">
-            <div class="data-card-header">
-                <h2>Asset Financing &amp; Monthly Payment Calculator</h2>
-            </div>
-            <div class="calc-grid">
-                <div>
-                    <div class="form-group">
-                        <label for="calc-vehicle-price">Vehicle Price (Ksh - Duty &amp; VAT Paid)</label>
-                        <input type="number" id="calc-vehicle-price" class="form-control" value="2600000" step="50000">
-                    </div>
-                    <div class="form-group">
-                        <label for="calc-deposit-pct">Down Payment (%)</label>
-                        <select id="calc-deposit-pct" class="form-control">
-                            <option value="10">10% Deposit (Ksh 260,000)</option>
-                            <option value="20" selected>20% Deposit (Ksh 520,000)</option>
-                            <option value="30">30% Deposit (Ksh 780,000)</option>
-                            <option value="40">40% Deposit (Ksh 1,040,000)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="calc-term">Repayment Duration</label>
-                        <select id="calc-term" class="form-control">
-                            <option value="12">12 Months (1 Year)</option>
-                            <option value="24">24 Months (2 Years)</option>
-                            <option value="36">36 Months (3 Years)</option>
-                            <option value="48" selected>48 Months (4 Years)</option>
-                            <option value="60">60 Months (5 Years)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="calc-interest-rate">Annual Interest Rate (%)</label>
-                        <input type="number" id="calc-interest-rate" class="form-control" value="13.5" step="0.5">
-                    </div>
+        <!-- Protected Dashboard Content (Visible only upon verified authentication) -->
+        <div id="dashboard-protected-content">
+            <!-- Authenticated Session Bar -->
+            <div class="user-session-bar" style="background-color: var(--color-surface); border: 1px solid var(--color-border); padding: 12px 20px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span class="badge badge-success" style="font-size: 11px; padding: 4px 8px;">AUTHENTICATED SESSION</span>
+                    <span style="font-size: 14px; color: var(--color-text);">Signed in as: <strong id="session-user-display">Verifying session...</strong></span>
                 </div>
-
-                <div class="calc-results-box" role="region" aria-live="polite" aria-label="Financing Calculation Result">
-                    <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-light);">Estimated Monthly Repayment</span>
-                    <div class="calc-monthly-amount" id="calc-monthly-display">Ksh 56,230</div>
-                    <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 6px;">
-                        Principal Financed: <strong id="calc-financed-display">Ksh 2,080,000</strong>
-                    </p>
-                    <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 6px;">
-                        Required Deposit: <strong id="calc-deposit-display">Ksh 520,000</strong>
-                    </p>
-                    <p style="font-size: 12px; color: var(--color-text-light); margin-bottom: 16px;">
-                        Statutory NTSA Transfer Fee: <strong>Ksh 3,500</strong> (Zero hidden dealer fees)
-                    </p>
-                    <a href="contact.html" class="btn btn-primary btn-sm">Inquire for Pre-Approval</a>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 12px; color: var(--color-text-muted);">Dealership Portal</span>
+                    <button type="button" id="dashboard-signout-btn" class="btn btn-secondary btn-sm" style="padding: 6px 14px;">Sign Out</button>
                 </div>
             </div>
-        </div>
 
-        <!-- Vehicle Orders & Reservations Section -->
-        <div class="data-card">
-            <div class="data-card-header">
-                <h2>Vehicle Reservations &amp; Orders</h2>
+            <!-- Transparent Pricing Notice -->
+            <div class="fee-breakdown-banner">
+                <strong>Complete Fee Transparency (Zero Hidden Charges):</strong> All listed vehicle prices include KRA Import Duty, Excise Duty, 16% VAT, and our 150-Point Mechanical Inspection Certificate. The only statutory pass-through fee is the official NTSA TIMS Logbook Transfer fee of <strong>Ksh 3,500</strong>. All holding deposits are 100% refundable under our <a href="refund.html" style="color: var(--color-accent); font-weight: 600;">Refund Policy</a>.
             </div>
-            <div class="table-responsive" id="orders">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Order ID</th>
-                            <th scope="col">Vehicle</th>
-                            <th scope="col">Customer Name</th>
-                            <th scope="col">Order Date</th>
-                            <th scope="col">Financing Plan</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="orders-tbody">
-                        <tr>
-                            <td>#ORD-1082</td>
-                            <td><strong>2019 Audi A4 (Quattro)</strong></td>
-                            <td>David Kimani</td>
-                            <td>2026-10-24</td>
-                            <td>Commercial Bank Asset Loan</td>
-                            <td><span class="badge badge-success">Approved</span></td>
-                        </tr>
-                        <tr>
-                            <td>#ORD-1081</td>
-                            <td><strong>2020 Mercedes-Benz C-Class</strong></td>
-                            <td>Sarah Wanjiru</td>
-                            <td>2026-10-22</td>
-                            <td>Direct Settlement</td>
-                            <td><span class="badge badge-info">TIMS Transfer</span></td>
-                        </tr>
-                        <tr>
-                            <td>#ORD-1080</td>
-                            <td><strong>2021 Toyota Camry</strong></td>
-                            <td>Patrick Odhiambo</td>
-                            <td>2026-10-20</td>
-                            <td>Asset Finance (36 Mos)</td>
-                            <td><span class="badge badge-pending">Underwriting</span></td>
-                        </tr>
-                        <tr>
-                            <td>#ORD-1079</td>
-                            <td><strong>2019 Subaru Outback</strong></td>
-                            <td>Grace Mutiso</td>
-                            <td>2026-10-18</td>
-                            <td>Direct Settlement</td>
-                            <td><span class="badge badge-success">Delivered</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
-        <!-- Certified Showroom Inventory Section -->
-        <div class="data-card">
-            <div class="data-card-header">
-                <h2>Showroom Vehicle Inventory Registry</h2>
-                <a href="Inventory.html" class="btn btn-secondary btn-sm">Open Public Inventory</a>
+            <!-- Key Operational Metrics -->
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Showroom Inventory</div>
+                    <div class="metric-value" id="stat-total-cars">18</div>
+                    <div class="metric-note">Inspected and certified units</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Vehicle Makes Represented</div>
+                    <div class="metric-value" id="stat-total-makes">12</div>
+                    <div class="metric-note">Sedans, wagons, coupes, executive</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Standard TIMS Transfer</div>
+                    <div class="metric-value">48 Hours</div>
+                    <div class="metric-note">Statutory fee: Ksh 3,500 flat</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Holding Deposit Protection</div>
+                    <div class="metric-value">100% Refundable</div>
+                    <div class="metric-note">3-business-day EFT refund</div>
+                </div>
             </div>
-            <div class="table-responsive" id="inventory">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Make &amp; Model</th>
-                            <th scope="col">Year</th>
-                            <th scope="col">All-Inclusive Price (Ksh)</th>
-                            <th scope="col">Powertrain</th>
-                            <th scope="col">Inspection Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="inventory-tbody">
-                        <tr>
-                            <td><strong>Honda Civic</strong></td>
-                            <td>2019</td>
-                            <td>Ksh 2,340,000</td>
-                            <td>1.5L Turbo, CVT</td>
-                            <td><span class="badge badge-success">150-Pt Certified</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Chevrolet Camaro</strong></td>
-                            <td>2020</td>
-                            <td>Ksh 3,640,000</td>
-                            <td>2.0L Turbo, 8-Speed Auto</td>
-                            <td><span class="badge badge-success">150-Pt Certified</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>BMW 3 Series</strong></td>
-                            <td>2018</td>
-                            <td>Ksh 3,250,000</td>
-                            <td>2.0L Twin-Turbo, RWD</td>
-                            <td><span class="badge badge-success">150-Pt Certified</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Toyota Corolla</strong></td>
-                            <td>2020</td>
-                            <td>Ksh 2,600,000</td>
-                            <td>1.8L 4-Cylinder, Dual VVT-i</td>
-                            <td><span class="badge badge-success">150-Pt Certified</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Audi A4</strong></td>
-                            <td>2019</td>
-                            <td>Ksh 3,510,000</td>
-                            <td>2.0L TFSI, Quattro AWD</td>
-                            <td><span class="badge badge-success">150-Pt Certified</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Mercedes-Benz C-Class</strong></td>
-                            <td>2020</td>
-                            <td>Ksh 4,550,000</td>
-                            <td>2.0L Turbo, 9G-Tronic</td>
-                            <td><span class="badge badge-success">150-Pt Certified</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
-        <!-- Dealership Customers & Verification Section -->
-        <div class="data-card">
-            <div class="data-card-header">
-                <h2>Registered Client Inquiries</h2>
-                <a href="data-deletion.html" class="btn btn-secondary btn-sm">Data Deletion Portal</a>
+            <!-- Asset Financing Calculator -->
+            <div class="data-card">
+                <div class="data-card-header">
+                    <h2>Asset Financing &amp; Monthly Payment Calculator</h2>
+                </div>
+                <div class="calc-grid">
+                    <div>
+                        <div class="form-group">
+                            <label for="calc-vehicle-price">Vehicle Price (Ksh - Duty &amp; VAT Paid)</label>
+                            <input type="number" id="calc-vehicle-price" class="form-control" value="2600000" step="50000">
+                        </div>
+                        <div class="form-group">
+                            <label for="calc-deposit-pct">Down Payment (%)</label>
+                            <select id="calc-deposit-pct" class="form-control">
+                                <option value="10">10% Deposit (Ksh 260,000)</option>
+                                <option value="20" selected>20% Deposit (Ksh 520,000)</option>
+                                <option value="30">30% Deposit (Ksh 780,000)</option>
+                                <option value="40">40% Deposit (Ksh 1,040,000)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="calc-term">Repayment Duration</label>
+                            <select id="calc-term" class="form-control">
+                                <option value="12">12 Months (1 Year)</option>
+                                <option value="24">24 Months (2 Years)</option>
+                                <option value="36">36 Months (3 Years)</option>
+                                <option value="48" selected>48 Months (4 Years)</option>
+                                <option value="60">60 Months (5 Years)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="calc-interest-rate">Annual Interest Rate (%)</label>
+                            <input type="number" id="calc-interest-rate" class="form-control" value="13.5" step="0.5">
+                        </div>
+                    </div>
+
+                    <div class="calc-results-box" role="region" aria-live="polite" aria-label="Financing Calculation Result">
+                        <span style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-light);">Estimated Monthly Repayment</span>
+                        <div class="calc-monthly-amount" id="calc-monthly-display">Ksh 56,230</div>
+                        <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 6px;">
+                            Principal Financed: <strong id="calc-financed-display">Ksh 2,080,000</strong>
+                        </p>
+                        <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 6px;">
+                            Required Deposit: <strong id="calc-deposit-display">Ksh 520,000</strong>
+                        </p>
+                        <p style="font-size: 12px; color: var(--color-text-light); margin-bottom: 16px;">
+                            Statutory NTSA Transfer Fee: <strong>Ksh 3,500</strong> (Zero hidden dealer fees)
+                        </p>
+                        <a href="contact.html" class="btn btn-primary btn-sm">Inquire for Pre-Approval</a>
+                    </div>
+                </div>
             </div>
-            <div class="table-responsive" id="customers">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Client ID</th>
-                            <th scope="col">Full Name</th>
-                            <th scope="col">Email Address</th>
-                            <th scope="col">Account Type</th>
-                            <th scope="col">Verification Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="customers-tbody">
-                        <tr>
-                            <td>#CLT-501</td>
-                            <td>David Kimani</td>
-                            <td>dkimani@example.com</td>
-                            <td>Individual Buyer</td>
-                            <td><span class="badge badge-success">18+ &amp; Consent Verified</span></td>
-                        </tr>
-                        <tr>
-                            <td>#CLT-502</td>
-                            <td>Sarah Wanjiru</td>
-                            <td>swanjiru@example.com</td>
-                            <td>Corporate Account</td>
-                            <td><span class="badge badge-success">CR12 Verified</span></td>
-                        </tr>
-                        <tr>
-                            <td>#CLT-503</td>
-                            <td>Patrick Odhiambo</td>
-                            <td>podhiambo@example.com</td>
-                            <td>Individual Buyer</td>
-                            <td><span class="badge badge-pending">Pending Bank Review</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+
+            <!-- Vehicle Orders & Reservations Section (Dynamically Loaded via Authenticated Token) -->
+            <div class="data-card">
+                <div class="data-card-header">
+                    <h2>Vehicle Reservations &amp; Orders</h2>
+                </div>
+                <div class="table-responsive" id="orders">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">Vehicle</th>
+                                <th scope="col">Customer Name</th>
+                                <th scope="col">Order Date</th>
+                                <th scope="col">Financing Plan</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-tbody">
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: var(--color-text-muted); padding: 24px;">Loading authenticated order records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Certified Showroom Inventory Section -->
+            <div class="data-card">
+                <div class="data-card-header">
+                    <h2>Showroom Vehicle Inventory Registry</h2>
+                    <a href="Inventory.html" class="btn btn-secondary btn-sm">Open Public Inventory</a>
+                </div>
+                <div class="table-responsive" id="inventory">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Make &amp; Model</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">All-Inclusive Price (Ksh)</th>
+                                <th scope="col">Powertrain</th>
+                                <th scope="col">Inspection Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-tbody">
+                            <tr>
+                                <td><strong>Honda Civic</strong></td>
+                                <td>2019</td>
+                                <td>Ksh 2,340,000</td>
+                                <td>1.5L Turbo, CVT</td>
+                                <td><span class="badge badge-success">150-Pt Certified</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Chevrolet Camaro</strong></td>
+                                <td>2020</td>
+                                <td>Ksh 3,640,000</td>
+                                <td>2.0L Turbo, 8-Speed Auto</td>
+                                <td><span class="badge badge-success">150-Pt Certified</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>BMW 3 Series</strong></td>
+                                <td>2018</td>
+                                <td>Ksh 3,250,000</td>
+                                <td>2.0L Twin-Turbo, RWD</td>
+                                <td><span class="badge badge-success">150-Pt Certified</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Toyota Corolla</strong></td>
+                                <td>2020</td>
+                                <td>Ksh 2,600,000</td>
+                                <td>1.8L 4-Cylinder, Dual VVT-i</td>
+                                <td><span class="badge badge-success">150-Pt Certified</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Audi A4</strong></td>
+                                <td>2019</td>
+                                <td>Ksh 3,510,000</td>
+                                <td>2.0L TFSI, Quattro AWD</td>
+                                <td><span class="badge badge-success">150-Pt Certified</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mercedes-Benz C-Class</strong></td>
+                                <td>2020</td>
+                                <td>Ksh 4,550,000</td>
+                                <td>2.0L Turbo, 9G-Tronic</td>
+                                <td><span class="badge badge-success">150-Pt Certified</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Dealership Customers & Verification Section (Dynamically Loaded via Authenticated Token) -->
+            <div class="data-card">
+                <div class="data-card-header">
+                    <h2>Registered Client Inquiries</h2>
+                    <a href="data-deletion.html" class="btn btn-secondary btn-sm">Data Deletion Portal</a>
+                </div>
+                <div class="table-responsive" id="customers">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Client ID</th>
+                                <th scope="col">Full Name</th>
+                                <th scope="col">Email Address</th>
+                                <th scope="col">Account Type</th>
+                                <th scope="col">Verification Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customers-tbody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--color-text-muted); padding: 24px;">Loading authenticated client inquiries...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </main>
@@ -325,8 +312,8 @@
                 <h4>Inventory &amp; Services</h4>
                 <ul>
                     <li><a href="Inventory.html">Vehicle Inventory</a></li>
-                    <li><a href="Dashboard.html">Financing Calculator</a></li>
-                    <li><a href="Dashboard.html">Inspection Reports</a></li>
+                    <li><a href="Inventory.html#financing-calculator">Financing Calculator</a></li>
+                    <li><a href="about.html#inspection-standards">Inspection Reports</a></li>
                     <li><a href="contact.html">Schedule a Test Drive</a></li>
                 </ul>
             </div>

@@ -6,6 +6,11 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     // -------------------------------------------------------------
+    // 0. Dealership Portal Authentication & Dynamic Navigation Guard
+    // -------------------------------------------------------------
+    initAuthPortal();
+
+    // -------------------------------------------------------------
     // 1. Non-Deceptive Cookie Consent Banner
     // -------------------------------------------------------------
     const cookieBanner = document.getElementById('cookie-consent-banner');
@@ -418,12 +423,179 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // -------------------------------------------------------------
-// 7. Clear First-Party Storage Helper (Cookie Policy Page)
+// 7. Dealership Portal Authentication & Access Gate
+// -------------------------------------------------------------
+function initAuthPortal() {
+    const token = localStorage.getItem('authToken');
+    const userEmail = localStorage.getItem('userEmail');
+    const userName = localStorage.getItem('userName');
+    const navPortalLink = document.getElementById('nav-portal-link');
+
+    // Dynamically update navigation based on authentication status
+    if (navPortalLink) {
+        if (token) {
+            navPortalLink.textContent = 'Dashboard';
+            navPortalLink.href = 'Dashboard.html';
+        } else {
+            navPortalLink.textContent = 'Client Portal';
+            navPortalLink.href = 'login.html';
+        }
+    }
+
+    // Check if we are on Dashboard.html
+    const isDashboard = window.location.pathname.endsWith('Dashboard.html') || 
+                        window.location.pathname.endsWith('dashboard') || 
+                        Boolean(document.getElementById('dashboard-protected-content'));
+
+    if (isDashboard) {
+        const protectedContent = document.getElementById('dashboard-protected-content');
+        const authGate = document.getElementById('dashboard-auth-gate');
+        const userDisplay = document.getElementById('session-user-display');
+        const signoutBtn = document.getElementById('dashboard-signout-btn');
+
+        if (!token) {
+            if (protectedContent) protectedContent.style.display = 'none';
+            if (authGate) authGate.style.display = 'block';
+            window.location.replace('login.html?redirect=Dashboard.html&reason=auth_required');
+            return;
+        }
+
+        if (userDisplay) {
+            userDisplay.textContent = userName ? `${userName} (${userEmail})` : (userEmail || 'Dealership Client');
+        }
+        if (protectedContent) {
+            protectedContent.style.display = 'block';
+        }
+        if (authGate) {
+            authGate.style.display = 'none';
+        }
+
+        if (signoutBtn) {
+            signoutBtn.onclick = function() { signOutUser(false); };
+        }
+
+        // Fetch authenticated live operations data
+        loadDashboardData(token);
+    }
+}
+
+function signOutUser(isExpired) {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userName');
+    const reason = isExpired ? 'session_expired' : 'signed_out';
+    window.location.href = `login.html?reason=${reason}`;
+}
+
+function loadDashboardData(token) {
+    const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    };
+
+    // 1. Fetch live metrics
+    fetch('/api/dashboard-data', { headers })
+        .then(res => {
+            if (res.status === 401 || res.status === 403) {
+                signOutUser(true);
+                return null;
+            }
+            return res.json();
+        })
+        .then(data => {
+            if (!data) return;
+            const totalCarsEl = document.getElementById('stat-total-cars');
+            const totalMakesEl = document.getElementById('stat-total-makes');
+            if (totalCarsEl && data.totalCars) totalCarsEl.textContent = data.totalCars;
+            if (totalMakesEl && data.carmake) totalMakesEl.textContent = data.carmake;
+        })
+        .catch(err => {
+            console.warn('Could not refresh live metrics:', err);
+        });
+
+    // 2. Fetch authenticated vehicle orders
+    fetch('/api/order', { headers })
+        .then(res => {
+            if (res.status === 401 || res.status === 403) {
+                signOutUser(true);
+                return null;
+            }
+            return res.json();
+        })
+        .then(orders => {
+            if (!orders) return;
+            const tbody = document.getElementById('orders-tbody');
+            if (!tbody) return;
+            if (!Array.isArray(orders) || orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--color-text-muted); padding: 24px;">No active orders recorded.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = orders.map(ord => {
+                let badgeClass = 'badge-info';
+                if (ord.status === 'Approved' || ord.status === 'Delivered') badgeClass = 'badge-success';
+                if (ord.status === 'Underwriting') badgeClass = 'badge-pending';
+                return `<tr>
+                    <td>#ORD-${escapeHtml(ord.order_id)}</td>
+                    <td><strong>${escapeHtml(ord.car || 'Vehicle')}</strong></td>
+                    <td>${escapeHtml(ord.customer_name || 'Verified Client')}</td>
+                    <td>${escapeHtml(ord.order_date || '-')}</td>
+                    <td>${escapeHtml(ord.financing_plan || 'Direct Settlement')}</td>
+                    <td><span class="badge ${badgeClass}">${escapeHtml(ord.status || 'Active')}</span></td>
+                </tr>`;
+            }).join('');
+        })
+        .catch(err => {
+            console.warn('Could not refresh live orders:', err);
+        });
+
+    // 3. Fetch authenticated customer inquiries
+    fetch('/api/customer', { headers })
+        .then(res => {
+            if (res.status === 401 || res.status === 403) {
+                signOutUser(true);
+                return null;
+            }
+            return res.json();
+        })
+        .then(customers => {
+            if (!customers) return;
+            const tbody = document.getElementById('customers-tbody');
+            if (!tbody) return;
+            if (!Array.isArray(customers) || customers.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--color-text-muted); padding: 24px;">No registered client inquiries recorded.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = customers.map(c => `<tr>
+                <td>#CLT-${escapeHtml(c.id)}</td>
+                <td>${escapeHtml(c.name)}</td>
+                <td>${escapeHtml(c.email)}</td>
+                <td>Individual Buyer</td>
+                <td><span class="badge badge-success">18+ &amp; Consent Verified</span></td>
+            </tr>`).join('');
+        })
+        .catch(err => {
+            console.warn('Could not refresh live customer inquiries:', err);
+        });
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+// -------------------------------------------------------------
+// 8. Clear First-Party Storage Helper (Cookie Policy Page)
 // -------------------------------------------------------------
 function clearBlissStorage() {
     localStorage.removeItem('bliss_cookie_consent');
     localStorage.removeItem('authToken');
     localStorage.removeItem('userEmail');
+    localStorage.removeItem('userName');
     localStorage.removeItem('chat_customer_name');
     localStorage.removeItem('chat_customer_email');
     const feedback = document.getElementById('clear-storage-feedback');
@@ -433,7 +605,7 @@ function clearBlissStorage() {
 }
 
 // -------------------------------------------------------------
-// 8. Inventory Filtering and Sorting (Global Functions)
+// 9. Inventory Filtering and Sorting (Global Functions)
 // -------------------------------------------------------------
 function filterCars() {
     const searchInput = document.getElementById('search');
